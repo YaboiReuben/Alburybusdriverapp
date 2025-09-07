@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Under Maintenance</title>
+    <title>Albury and Wodonga Transport - Bus Driver Application</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts - Inter -->
@@ -18,18 +18,774 @@
             min-height: 100vh;
             padding: 1rem;
         }
+        .container {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            max-width: 800px;
+            width: 100%;
+            padding: 2.5rem; /* Increased padding */
+            transition: all 0.3s ease-in-out;
+        }
+        .form-step {
+            display: none;
+        }
+        .form-step.active {
+            display: block;
+        }
+        .btn-primary {
+            background-color: #4f46e5; /* Indigo 600 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem; /* Rounded */
+            font-weight: 600;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+        }
+        .btn-primary:hover {
+            background-color: #4338ca; /* Indigo 700 */
+            transform: translateY(-1px);
+        }
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        .btn-secondary {
+            background-color: #e0e7ff; /* Indigo 100 */
+            color: #4f46e5; /* Indigo 600 */
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem; /* Rounded */
+            font-weight: 600;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+        }
+        .btn-secondary:hover {
+            background-color: #c7d2fe; /* Indigo 200 */
+            transform: translateY(-1px);
+        }
+        .btn-secondary:active {
+            transform: translateY(0);
+        }
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db; /* Gray 300 */
+            border-radius: 0.5rem; /* Rounded */
+            font-size: 1rem;
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #6366f1; /* Indigo 500 */
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25); /* Indigo 500 with opacity */
+        }
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #374151; /* Gray 700 */
+        }
+        .error-message {
+            color: #ef4444; /* Red 500 */
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        /* Message box for alerts */
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            border: 1px solid #d1d5db;
+        }
+        .message-box-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        /* Custom styles for the day and quality buttons */
+        .day-btn, .quality-checkbox {
+            background-color: #f3f4f6;
+            color: #4b5563;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: background-color 0.2s, color 0.2s;
+            cursor: pointer;
+            text-align: center;
+        }
+        .day-btn.active, .quality-checkbox.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+        .quality-checkbox {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
-    <div class="container bg-white p-12 rounded-3xl shadow-2xl max-w-xl text-center">
-        <h1 class="text-4xl font-bold text-gray-900 mb-4">Under Maintenance</h1>
-        <p class="text-lg text-gray-700 mb-6">
-            The bus driver application is currently undergoing maintenance.
-            We appreciate your patience and will be back online shortly.
-        </p>
-        <p class="text-md text-gray-600">
-            For more information, please check our official Discord server.
-        </p>
+    <div class="container">
+        <!-- Requirements Screen -->
+        <div id="requirements-screen" class="text-center">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Albury and Wodonga Transport</h1>
+            <h2 class="text-2xl font-semibold text-gray-800 mb-8">Bus Driver Application Requirements</h2>
+            <ul class="list-disc list-inside text-left text-lg text-gray-700 space-y-3 mb-10 max-w-md mx-auto">
+                <li>You must be at least 13 years of age.</li>
+                <li>You must be a member of our official Discord server.</li>
+                <li>You must be a member of our Roblox group **Public Transport Victoria ( PTV)**.</li>
+                <li>Any use of AI to generate responses will result in an automatic disqualification.</li>
+            </ul>
+            <button id="start-application-btn" class="btn-primary">Start Application</button>
+        </div>
+
+        <!-- Application Form -->
+        <form id="application-form" class="form-step">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Bus Driver Application Form</h2>
+            <div id="form-steps-container">
+                <!-- Step 1: Roblox Username -->
+                <div id="step-1" class="form-step active">
+                    <label for="roblox-username" class="label">Your Roblox Username:</label>
+                    <input type="text" id="roblox-username" name="robloxUsername" required class="mb-4">
+                    <div class="flex justify-end">
+                        <button type="button" class="btn-primary next-btn">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Discord Username -->
+                <div id="step-2" class="form-step">
+                    <label for="discord-username" class="label">Your Discord Username (e.g., YourName#1234):</label>
+                    <input type="text" id="discord-username" name="discordUsername" required class="mb-4">
+                    <div class="flex justify-between">
+                        <button type="button" class="btn-secondary prev-btn">Previous</button>
+                        <button type="button" class="btn-primary next-btn">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Age -->
+                <div id="step-3" class="form-step">
+                    <label for="age" class="label">Your Age:</label>
+                    <input type="number" id="age" name="age" min="13" required class="mb-4">
+                    <p id="age-error" class="error-message hidden">You must be at least 13 years old.</p>
+                    <div class="flex justify-between">
+                        <button type="button" class="btn-secondary prev-btn">Previous</button>
+                        <button type="button" class="btn-primary next-btn">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Why do you want to be a bus driver? (Dropdown with Text Area) -->
+                <div id="step-4" class="form-step">
+                    <label for="why-bus-driver-select" class="label">Why do you want to be a bus driver for Albury and Wodonga Transport?:</label>
+                    <select id="why-bus-driver-select" name="whyBusDriverSelect" required class="mb-4">
+                        <option value="">Select an option</option>
+                        <option value="I enjoy driving and want to do it professionally.">I enjoy driving and want to do it professionally.</option>
+                        <option value="I want to contribute to the group and help transport people.">I want to contribute to the group and help transport people.</option>
+                        <option value="I like the challenge of managing a route and passengers.">I like the challenge of managing a route and passengers.</option>
+                        <option value="Other">Other (Please specify below)</option>
+                    </select>
+                    <textarea id="why-bus-driver-other" name="whyBusDriverOther" class="mb-4 hidden" placeholder="Please explain your reason here..."></textarea>
+                    <div class="flex justify-between">
+                        <button type="button" class="btn-secondary prev-btn">Previous</button>
+                        <button type="button" class="btn-primary next-btn">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 5: Availability - Preferred Day(s) -->
+                <div id="step-5" class="form-step">
+                    <label class="label">Preferred Day(s):</label>
+                    <div id="day-selection-box" class="bg-gray-100 rounded-lg p-4 mb-4">
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                            <button type="button" class="day-btn" data-day="Monday">Monday</button>
+                            <button type="button" class="day-btn" data-day="Tuesday">Tuesday</button>
+                            <button type="button" class="day-btn" data-day="Wednesday">Wednesday</button>
+                            <button type="button" class="day-btn" data-day="Thursday">Thursday</button>
+                            <button type="button" class="day-btn" data-day="Friday">Friday</button>
+                            <button type="button" class="day-btn" data-day="Saturday">Saturday</button>
+                            <button type="button" class="day-btn" data-day="Sunday">Sunday</button>
+                        </div>
+                    </div>
+                    <div class="flex justify-between">
+                        <button type="button" class="btn-secondary prev-btn">Previous</button>
+                        <button type="button" class="btn-primary next-btn">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 6: Availability - Preferred Time Slot -->
+                <div id="step-6" class="form-step">
+                    <label for="time-zone" class="label">Your Time Zone:</label>
+                    <input type="text" id="time-zone" name="timeZone" placeholder="e.g., GMT, EST, PST" class="mb-4">
+
+                    <label for="preferred-time" class="label">Preferred Time Slot:</label>
+                    <select id="preferred-time" name="preferredTime" required class="mb-4">
+                        <option value="">Select Time</option>
+                        <option value="Morning">Morning</option>
+                        <option value="Afternoon">Afternoon</option>
+                        <option value="Evening">Evening</option>
+                        <option value="Night">Night</option>
+                        <option value="Any Time">Any Time</option>
+                    </select>
+                    <div class="flex justify-between">
+                        <button type="button" class="btn-secondary prev-btn">Previous</button>
+                        <button type="button" class="btn-primary next-btn">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 7: Availability - Specific Notes -->
+                <div id="step-7" class="form-step">
+                    <label for="availability-notes" class="label">Any specific notes on your availability (e.g., specific days/hours, holidays):</label>
+                    <textarea id="availability-notes" name="availabilityNotes" class="mb-4"></textarea>
+                    <div class="flex justify-between">
+                        <button type="button" class="btn-secondary prev-btn">Previous</button>
+                        <button type="button" class="btn-primary next-btn">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 8: How would you handle a hacker/troller/rude passenger? (Dropdown) -->
+                <div id="step-8" class="form-step">
+                    <label for="handle-hacker-select" class="label">How would you handle a hacker disrupting your bus route or the game?</label>
+                    <select id="handle-hacker-select" name="handleHackerSelect" required class="mb-4">
+                        <option value="">Select an action</option>
+                        <option value="Immediately report them to executives.">Immediately report them to executives.</option>
+                        <option value="Politely ask them to stop, then report if they don't.">Politely ask them to stop, then report if they don't.</option>
+                        <option value="Do not engage, and report them quietly to executives.">Do not engage, and report them quietly to executives.</option>
+                        <option value="Other">Other (Please specify below)</option>
+                    </select>
+                    <textarea id="handle-hacker-other" name="handleHackerOther" class="mb-4 hidden" placeholder="Please explain your action..."></textarea>
+
+                    <label for="handle-troller-select" class="label">How would you handle a troller intentionally causing chaos or blocking the bus?</label>
+                    <select id="handle-troller-select" name="handleTrollerSelect" required class="mb-4">
+                        <option value="">Select an action</option>
+                        <option value="Immediately report them to executives.">Immediately report them to executives.</option>
+                        <option value="Politely ask them to stop, then report if they don't.">Politely ask them to stop, then report if they don't.</option>
+                        <option value="Do not engage, and report them quietly to executives.">Do not engage, and report them quietly to executives.</option>
+                        <option value="Other">Other (Please specify below)</option>
+                    </select>
+                    <textarea id="handle-troller-other" name="handleTrollerOther" class="mb-4 hidden" placeholder="Please explain your action..."></textarea>
+
+                    <label for="handle-rude-passenger-select" class="label">How would you handle a passenger being rude or disrespectful to you or other players?</label>
+                    <select id="handle-rude-passenger-select" name="handleRudePassengerSelect" required class="mb-4">
+                        <option value="">Select an action</option>
+                        <option value="Immediately report them to executives.">Immediately report them to executives.</option>
+                        <option value="Politely ask them to stop, then report if they don't.">Politely ask them to stop, then report if they don't.</option>
+                        <option value="Do not engage, and report them quietly to executives.">Do not engage, and report them quietly to executives.</option>
+                        <option value="Other">Other (Please specify below)</option>
+                    </select>
+                    <textarea id="handle-rude-passenger-other" name="handleRudePassengerOther" class="mb-4 hidden" placeholder="Please explain your action..."></textarea>
+
+                    <div class="flex justify-between">
+                        <button type="button" class="btn-secondary prev-btn">Previous</button>
+                        <button type="button" class="btn-primary next-btn">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 9: Roblox Driving Experience (Dropdown with Text Area) -->
+                <div id="step-9" class="form-step">
+                    <label for="roblox-driving-experience-select" class="label">Do you have any experience driving in Roblox games?</label>
+                    <select id="roblox-driving-experience-select" name="robloxDrivingExperienceSelect" required class="mb-4">
+                        <option value="">Select an option</option>
+                        <option value="None">None</option>
+                        <option value="A little">A little</option>
+                        <option value="A lot">A lot</option>
+                        <option value="Other">Other (Please specify below)</option>
+                    </select>
+                    <textarea id="roblox-driving-experience-other" name="robloxDrivingExperienceOther" class="mb-4 hidden" placeholder="Please describe your experience..."></textarea>
+                    <div class="flex justify-between">
+                        <button type="button" class="btn-secondary prev-btn">Previous</button>
+                        <button type="button" class="btn-primary next-btn">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 10: Commitment Frequency (Dropdown) -->
+                <div id="step-10" class="form-step">
+                    <label for="commitment-frequency" class="label">How often can you commit to driving buses for our group?</label>
+                    <select id="commitment-frequency" name="commitmentFrequency" required class="mb-4">
+                        <option value="">Select an option</option>
+                        <option value="Daily">Daily</option>
+                        <option value="A few times a week">A few times a week</option>
+                        <option value="Weekly">Weekly</option>
+                        <option value="Weekends only">Weekends only</option>
+                        <option value="A few times a month">A few times a month</option>
+                    </select>
+                    <div class="flex justify-between">
+                        <button type="button" class="btn-secondary prev-btn">Previous</button>
+                        <button type="button" class="btn-primary next-btn">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 11: Qualities of a Good Bus Driver (Checkboxes) -->
+                <div id="step-11" class="form-step">
+                    <label class="label">What qualities do you think a good bus driver should possess? (Select all that apply)</label>
+                    <div id="qualities-selection-box" class="bg-gray-100 rounded-lg p-4 mb-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <button type="button" class="quality-checkbox" data-quality="Patient">Patient</button>
+                            <button type="button" class="quality-checkbox" data-quality="Friendly">Friendly</button>
+                            <button type="button" class="quality-checkbox" data-quality="Responsible">Responsible</button>
+                            <button type="button" class="quality-checkbox" data-quality="Good Communicator">Good Communicator</button>
+                            <button type="button" class="quality-checkbox" data-quality="Calm under pressure">Calm under pressure</button>
+                            <button type="button" class="quality-checkbox" data-quality="Knowledge of rules">Knowledge of rules</button>
+                        </div>
+                    </div>
+                    <div class="flex justify-between">
+                        <button type="button" class="btn-secondary prev-btn">Previous</button>
+                        <button type="button" class="btn-primary next-btn">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 12: Problem Solving (Textarea) -->
+                <div id="step-12" class="form-step">
+                    <label for="problem-solving" class="label">Describe a time you had to solve a problem, either in a game or in real life. How did you approach it?</label>
+                    <textarea id="problem-solving" name="problemSolving" required class="mb-4"></textarea>
+                    <div class="flex justify-between">
+                        <button type="button" class="btn-secondary prev-btn">Previous</button>
+                        <button type="button" class="btn-primary next-btn">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 13: Disruptive Passenger (Textarea) -->
+                <div id="step-13" class="form-step">
+                    <label for="handle-disruptive-passenger" class="label">How would you handle a disruptive or uncooperative passenger on your bus?</label>
+                    <textarea id="handle-disruptive-passenger" name="handleDisruptivePassenger" required class="mb-4"></textarea>
+                    <div class="flex justify-between">
+                        <button type="button" class="btn-secondary prev-btn">Previous</button>
+                        <button type="button" class="btn-primary next-btn">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 14: Bus Breakdown (Textarea) -->
+                <div id="step-14" class="form-step">
+                    <label for="bus-breakdown" class="label">What would you do if your bus broke down during a route with passengers on board?</label>
+                    <textarea id="bus-breakdown" name="busBreakdown" required class="mb-4"></textarea>
+                    <div class="flex justify-between">
+                        <button type="button" class="btn-secondary prev-btn">Previous</button>
+                        <button type="button" class="btn-primary next-btn">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 15: Roblox ToS and Community Guidelines (Textarea) -->
+                <div id="step-15" class="form-step">
+                    <label for="roblox-tos" class="label">Are you familiar with Roblox's Terms of Service and Community Guidelines? How important are they for a bus driver?</label>
+                    <textarea id="roblox-tos" name="robloxTos" required class="mb-4"></textarea>
+                    <div class="flex justify-between">
+                        <button type="button" class="btn-secondary prev-btn">Previous</button>
+                        <button type="button" class="btn-primary next-btn">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 16: Discord Server and Roblox Group Confirmation -->
+                <div id="step-16" class="form-step">
+                    <div class="flex items-center mb-4">
+                        <input type="checkbox" id="discord-confirm" name="discordConfirm" class="mr-2 h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                        <label for="discord-confirm" class="label mb-0">I confirm I am a member of the "Albury and Wodonga Transport" Discord server.</label>
+                    </div>
+                    <p id="discord-confirm-error" class="error-message hidden">You must confirm your Discord membership.</p>
+
+                    <div class="flex items-center mb-4">
+                        <input type="checkbox" id="roblox-group-confirm" name="robloxGroupConfirm" class="mr-2 h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                        <label for="roblox-group-confirm" class="label mb-0">I confirm I am a member of the "Public Transport Victoria ( PTV)" Roblox group.</label>
+                    </div>
+                    <p id="roblox-group-confirm-error" class="error-message hidden">You must confirm your Roblox group membership.</p>
+
+                    <div class="flex justify-between">
+                        <button type="button" class="btn-secondary prev-btn">Previous</button>
+                        <button type="submit" class="btn-primary">Submit Application</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Progress Bar (Optional, but good for UX) -->
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-8">
+                <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full" style="width: 0%;"></div>
+            </div>
+        </form>
+
+        <!-- Thank You Screen -->
+        <div id="thank-you-screen" class="form-step text-center">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Thank You for Your Application!</h2>
+            <p class="text-lg text-gray-700 mb-8">Your application has been submitted successfully. We will review it and get back to you shortly.</p>
+            <p class="text-md text-gray-600">Please keep an eye on our Discord server for updates.</p>
+        </div>
+
+        <!-- Message Box for alerts -->
+        <div id="message-box-overlay" class="message-box-overlay hidden"></div>
+        <div id="message-box" class="message-box hidden">
+            <p id="message-box-text" class="text-lg text-gray-800 mb-6"></p>
+            <button id="message-box-ok-btn" class="btn-primary">OK</button>
+        </div>
     </div>
+
+    <script>
+        const requirementsScreen = document.getElementById('requirements-screen');
+        const startApplicationBtn = document.getElementById('start-application-btn');
+        const applicationForm = document.getElementById('application-form');
+        const thankYouScreen = document.getElementById('thank-you-screen');
+        const formSteps = Array.from(document.querySelectorAll('.form-step:not(#application-form):not(#thank-you-screen)'));
+        const progressBar = document.getElementById('progress-bar');
+        const messageBox = document.getElementById('message-box');
+        const messageBoxOverlay = document.getElementById('message-box-overlay');
+        const messageBoxText = document.getElementById('message-box-text');
+        const messageBoxOkBtn = document.getElementById('message-box-ok-btn');
+
+        let currentStep = 0;
+        const totalSteps = formSteps.length;
+        let selectedDays = [];
+        let selectedQualities = [];
+
+        // Discord Webhook URL - REPLACE THIS WITH YOUR ACTUAL WEBHOOK URL
+        const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1398532071642894376/2GhPJl_ypmC_3xxkBF3VQMBlRQqf2rSZgOdAQTj6wX_lzdyDoYoC_8MpqbwvXWm-9lKc';
+
+        // Load saved data from localStorage
+        const savedFormData = JSON.parse(localStorage.getItem('busDriverFormData')) || {};
+
+        function showMessageBox(message) {
+            messageBoxText.textContent = message;
+            messageBox.classList.remove('hidden');
+            messageBoxOverlay.classList.remove('hidden');
+        }
+
+        function hideMessageBox() {
+            messageBox.classList.add('hidden');
+            messageBoxOverlay.classList.add('hidden');
+        }
+
+        messageBoxOkBtn.addEventListener('click', hideMessageBox);
+
+        function saveFormData() {
+            const formData = {};
+            // Save data from text, number, and select inputs
+            document.querySelectorAll('input, textarea, select').forEach(input => {
+                if (input.type === 'checkbox') {
+                    formData[input.name] = input.checked;
+                } else {
+                    formData[input.name] = input.value;
+                }
+            });
+            // Save selected days and qualities
+            formData['preferredDays'] = selectedDays;
+            formData['selectedQualities'] = selectedQualities;
+            localStorage.setItem('busDriverFormData', JSON.stringify(formData));
+        }
+
+        function loadFormData() {
+            for (const key in savedFormData) {
+                const input = document.querySelector(`[name="${key}"]`);
+                if (input) {
+                    if (input.type === 'checkbox') {
+                        input.checked = savedFormData[key];
+                    } else {
+                        input.value = savedFormData[key];
+                    }
+                }
+            }
+            // Load selected days and activate buttons
+            if (savedFormData.preferredDays) {
+                selectedDays = savedFormData.preferredDays;
+                document.querySelectorAll('.day-btn').forEach(btn => {
+                    if (selectedDays.includes(btn.dataset.day)) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+            // Load selected qualities and activate buttons
+            if (savedFormData.selectedQualities) {
+                selectedQualities = savedFormData.selectedQualities;
+                document.querySelectorAll('.quality-checkbox').forEach(btn => {
+                    if (selectedQualities.includes(btn.dataset.quality)) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+
+            // Show/hide "other" textareas based on loaded data
+            ['why-bus-driver', 'handle-hacker', 'handle-troller', 'handle-rude-passenger', 'roblox-driving-experience'].forEach(prefix => {
+                const select = document.getElementById(`${prefix}-select`);
+                const otherTextarea = document.getElementById(`${prefix}-other`);
+                if (select && otherTextarea) {
+                    if (select.value === 'Other') {
+                        otherTextarea.classList.remove('hidden');
+                        if (savedFormData[`${prefix}Other`]) {
+                            otherTextarea.value = savedFormData[`${prefix}Other`];
+                        }
+                    } else {
+                        otherTextarea.classList.add('hidden');
+                    }
+                }
+            });
+        }
+
+        function showStep(stepIndex) {
+            formSteps.forEach((step, index) => {
+                if (index === stepIndex) {
+                    step.classList.add('active');
+                } else {
+                    step.classList.remove('active');
+                }
+            });
+            updateProgressBar();
+            // Scroll to top of the form for better UX on navigation
+            applicationForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function updateProgressBar() {
+            const progress = ((currentStep + 1) / totalSteps) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        function validateStep(stepIndex) {
+            let isValid = true;
+            const currentStepElement = formSteps[stepIndex];
+            const inputs = currentStepElement.querySelectorAll('input[required], select[required], textarea[required]');
+
+            inputs.forEach(input => {
+                if (input.type === 'checkbox') {
+                    if (!input.checked) {
+                        isValid = false;
+                        document.getElementById(`${input.id}-error`).classList.remove('hidden');
+                    } else {
+                        document.getElementById(`${input.id}-error`).classList.add('hidden');
+                    }
+                } else if (!input.value.trim()) {
+                    isValid = false;
+                    input.style.borderColor = '#ef4444';
+                } else {
+                    input.style.borderColor = '#d1d5db';
+                }
+            });
+
+            const otherInputs = currentStepElement.querySelectorAll('select');
+            otherInputs.forEach(select => {
+                if (select.value === 'Other') {
+                    const otherTextarea = document.getElementById(`${select.id.replace('-select', '-other')}`);
+                    if (!otherTextarea || !otherTextarea.value.trim()) {
+                        isValid = false;
+                        otherTextarea.style.borderColor = '#ef4444';
+                    } else {
+                        otherTextarea.style.borderColor = '#d1d5db';
+                    }
+                }
+            });
+
+            if (stepIndex === 2) { // Age validation
+                const ageInput = document.getElementById('age');
+                const ageError = document.getElementById('age-error');
+                if (parseInt(ageInput.value) < 13) {
+                    isValid = false;
+                    ageError.classList.remove('hidden');
+                    ageInput.style.borderColor = '#ef4444';
+                } else {
+                    ageError.classList.add('hidden');
+                    ageInput.style.borderColor = '#d1d5db';
+                }
+            }
+
+            if (stepIndex === 4) { // Day selection validation
+                if (selectedDays.length === 0) {
+                    isValid = false;
+                }
+            }
+
+            if (stepIndex === 10) { // Qualities selection validation
+                if (selectedQualities.length === 0) {
+                    isValid = false;
+                }
+            }
+            
+            if (stepIndex === 15) { // Confirmation checkboxes validation
+                const discordCheckbox = document.getElementById('discord-confirm');
+                const robloxGroupCheckbox = document.getElementById('roblox-group-confirm');
+                if (!discordCheckbox.checked) {
+                    isValid = false;
+                    document.getElementById('discord-confirm-error').classList.remove('hidden');
+                } else {
+                    document.getElementById('discord-confirm-error').classList.add('hidden');
+                }
+                if (!robloxGroupCheckbox.checked) {
+                    isValid = false;
+                    document.getElementById('roblox-group-confirm-error').classList.remove('hidden');
+                } else {
+                    document.getElementById('roblox-group-confirm-error').classList.add('hidden');
+                }
+            }
+
+            return isValid;
+        }
+
+        // Event Listeners
+        startApplicationBtn.addEventListener('click', () => {
+            requirementsScreen.classList.add('hidden');
+            applicationForm.classList.add('active');
+            showStep(currentStep);
+            loadFormData();
+        });
+
+        // Toggle visibility of "Other" text areas based on select box value
+        document.querySelectorAll('#why-bus-driver-select, #handle-hacker-select, #handle-troller-select, #handle-rude-passenger-select, #roblox-driving-experience-select').forEach(select => {
+            select.addEventListener('change', (event) => {
+                const otherTextarea = document.getElementById(`${event.target.id.replace('-select', '-other')}`);
+                if (otherTextarea) {
+                    if (event.target.value === 'Other') {
+                        otherTextarea.classList.remove('hidden');
+                        otherTextarea.focus();
+                    } else {
+                        otherTextarea.classList.add('hidden');
+                        otherTextarea.value = '';
+                    }
+                }
+            });
+        });
+
+        // Day button logic
+        document.querySelectorAll('.day-btn').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const day = event.target.dataset.day;
+                if (selectedDays.includes(day)) {
+                    selectedDays = selectedDays.filter(d => d !== day);
+                    event.target.classList.remove('active');
+                } else {
+                    selectedDays.push(day);
+                    event.target.classList.add('active');
+                }
+            });
+        });
+
+        // Qualities checkbox logic
+        document.querySelectorAll('.quality-checkbox').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const quality = event.target.dataset.quality;
+                if (selectedQualities.includes(quality)) {
+                    selectedQualities = selectedQualities.filter(q => q !== quality);
+                    event.target.classList.remove('active');
+                } else {
+                    selectedQualities.push(quality);
+                    event.target.classList.add('active');
+                }
+            });
+        });
+
+        document.querySelectorAll('.next-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                if (validateStep(currentStep)) {
+                    saveFormData();
+                    currentStep++;
+                    if (currentStep < totalSteps) {
+                        showStep(currentStep);
+                    }
+                }
+            });
+        });
+
+        document.querySelectorAll('.prev-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                saveFormData();
+                currentStep--;
+                if (currentStep >= 0) {
+                    showStep(currentStep);
+                }
+            });
+        });
+
+        document.getElementById('application-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            if (validateStep(currentStep)) {
+                saveFormData();
+
+                const formData = new FormData(event.target);
+                const data = {};
+                for (let [key, value] of formData.entries()) {
+                    data[key] = value;
+                }
+                data['discordConfirm'] = document.getElementById('discord-confirm').checked;
+                data['robloxGroupConfirm'] = document.getElementById('roblox-group-confirm').checked;
+
+
+                // Overwrite with 'Other' textarea content if applicable
+                const otherInputs = document.querySelectorAll('textarea[name$="Other"]:not(.hidden)');
+                otherInputs.forEach(textarea => {
+                    const baseName = textarea.name.replace('Other', 'Select');
+                    if (data[baseName] === 'Other') {
+                        data[baseName] = textarea.value;
+                    }
+                });
+
+                console.log('Application Data:', data);
+
+                let discordMessageContent = "New Bus Driver Application Received!\n\n";
+                discordMessageContent += `**Roblox Username:** ${data.robloxUsername}\n`;
+                discordMessageContent += `**Discord Username:** ${data.discordUsername}\n`;
+                discordMessageContent += `**Age:** ${data.age}\n\n`;
+                discordMessageContent += `**Why do you want to be a bus driver?**\n${data.whyBusDriverSelect}\n\n`;
+                discordMessageContent += `**Availability:**\n`;
+                discordMessageContent += `  - **Preferred Day(s):** ${selectedDays.join(', ') || 'None selected'}\n`;
+                discordMessageContent += `  - **Time Zone:** ${data.timeZone || 'Not specified'}\n`;
+                discordMessageContent += `  - **Preferred Time Slot:** ${data.preferredTime}\n`;
+                if (data.availabilityNotes) {
+                    discordMessageContent += `  - **Specific Notes:** ${data.availabilityNotes}\n\n`;
+                } else {
+                    discordMessageContent += `\n`;
+                }
+                discordMessageContent += `**How would you handle the following situations?**\n`;
+                discordMessageContent += `  - **Hacker:** ${data.handleHackerSelect}\n`;
+                discordMessageContent += `  - **Troller:** ${data.handleTrollerSelect}\n`;
+                discordMessageContent += `  - **Rude Passenger:** ${data.handleRudePassengerSelect}\n\n`;
+                discordMessageContent += `**Roblox Driving Experience:** ${data.robloxDrivingExperienceSelect}\n`;
+                discordMessageContent += `**Disruptive Passenger Handling:** ${data.handleDisruptivePassenger}\n`;
+                discordMessageContent += `**Bus Breakdown Handling:** ${data.busBreakdown}\n`;
+                discordMessageContent += `**Roblox ToS & Community Guidelines:** ${data.robloxTos}\n`;
+                discordMessageContent += `**Commitment Frequency:** ${data.commitmentFrequency}\n`;
+                discordMessageContent += `**Qualities of a Good Bus Driver:** ${selectedQualities.join(', ') || 'None selected'}\n`;
+                discordMessageContent += `**Problem Solving:** ${data.problemSolving}\n`;
+                discordMessageContent += `**Discord Server Confirmed:** ${data.discordConfirm ? 'Yes' : 'No'}\n`;
+                discordMessageContent += `**Roblox Group Confirmed:** ${data.robloxGroupConfirm ? 'Yes' : 'No'}\n`;
+
+                try {
+                    const response = await fetch(DISCORD_WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ content: discordMessageContent }),
+                    });
+
+                    if (response.ok) {
+                        console.log('Application successfully sent to Discord!');
+                        localStorage.removeItem('busDriverFormData');
+
+                        applicationForm.classList.remove('active');
+                        applicationForm.classList.add('form-step');
+                        thankYouScreen.classList.add('active');
+                    } else {
+                        console.error('Failed to send application to Discord:', response.status, response.statusText);
+                        showMessageBox('Failed to submit application. Please try again later. (Error: ' + response.status + ')');
+                    }
+                } catch (error) {
+                    console.error('Error sending application to Discord:', error);
+                    showMessageBox('An error occurred while submitting your application. Please check your internet connection and try again.');
+                }
+            }
+        });
+
+        applicationForm.classList.add('form-step');
+        thankYouScreen.classList.add('form-step');
+        requirementsScreen.classList.remove('hidden');
+    </script>
 </body>
 </html>
