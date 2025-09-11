@@ -20,11 +20,11 @@
         }
         .container {
             background-color: #ffffff;
-            border-radius: 1.5rem; /* More rounded corners */
+            border-radius: 1.5rem;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             max-width: 800px;
             width: 100%;
-            padding: 2.5rem; /* Increased padding */
+            padding: 2.5rem;
             transition: all 0.3s ease-in-out;
         }
         .form-step {
@@ -34,30 +34,30 @@
             display: block;
         }
         .btn-primary {
-            background-color: #4f46e5; /* Indigo 600 */
+            background-color: #4f46e5;
             color: white;
             padding: 0.75rem 1.5rem;
-            border-radius: 0.75rem; /* Rounded */
+            border-radius: 0.75rem;
             font-weight: 600;
             transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
         }
         .btn-primary:hover {
-            background-color: #4338ca; /* Indigo 700 */
+            background-color: #4338ca;
             transform: translateY(-1px);
         }
         .btn-primary:active {
             transform: translateY(0);
         }
         .btn-secondary {
-            background-color: #e0e7ff; /* Indigo 100 */
-            color: #4f46e5; /* Indigo 600 */
+            background-color: #e0e7ff;
+            color: #4f46e5;
             padding: 0.75rem 1.5rem;
-            border-radius: 0.75rem; /* Rounded */
+            border-radius: 0.75rem;
             font-weight: 600;
             transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
         }
         .btn-secondary:hover {
-            background-color: #c7d2fe; /* Indigo 200 */
+            background-color: #c7d2fe;
             transform: translateY(-1px);
         }
         .btn-secondary:active {
@@ -69,8 +69,8 @@
         select {
             width: 100%;
             padding: 0.75rem;
-            border: 1px solid #d1d5db; /* Gray 300 */
-            border-radius: 0.5rem; /* Rounded */
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
             font-size: 1rem;
             transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
@@ -79,8 +79,8 @@
         textarea:focus,
         select:focus {
             outline: none;
-            border-color: #6366f1; /* Indigo 500 */
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25); /* Indigo 500 with opacity */
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
         }
         textarea {
             min-height: 120px;
@@ -90,14 +90,13 @@
             display: block;
             font-weight: 500;
             margin-bottom: 0.5rem;
-            color: #374151; /* Gray 700 */
+            color: #374151;
         }
         .error-message {
-            color: #ef4444; /* Red 500 */
+            color: #ef4444;
             font-size: 0.875rem;
             margin-top: 0.25rem;
         }
-        /* Message box for alerts */
         .message-box {
             position: fixed;
             top: 50%;
@@ -122,27 +121,6 @@
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 999;
         }
-
-        /* Custom styles for the day and quality buttons */
-        .day-btn, .quality-checkbox {
-            background-color: #f3f4f6;
-            color: #4b5563;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: 500;
-            transition: background-color 0.2s, color 0.2s;
-            cursor: pointer;
-            text-align: center;
-        }
-        .day-btn.active, .quality-checkbox.active {
-            background-color: #4f46e5;
-            color: white;
-        }
-        .quality-checkbox {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
     </style>
 </head>
 <body>
@@ -150,11 +128,11 @@
         <!-- Requirements Screen -->
         <div id="requirements-screen" class="text-center">
             <h1 class="text-3xl font-bold text-gray-900 mb-6">Albury and Wodonga Transport</h1>
-            <h2 class="text-2xl font-semibold text-gray-800 mb-8">Bus Driver Application Requirements</h2>
+            <h2 class="text-2xl font-semibold text-gray-800 mb-8">Application Requirements</h2>
             <ul class="list-disc list-inside text-left text-lg text-gray-700 space-y-3 mb-10 max-w-md mx-auto">
                 <li>You must be at least 13 years of age.</li>
                 <li>You must be a member of our official Discord server.</li>
-                <li>You must be a member of our Roblox group **Public Transport Victoria ( PTV)**.</li>
+                <li>You must be a member of our Roblox group **Public Transport Victoria (PTV)**.</li>
                 <li>Any use of AI to generate responses will result in an automatic disqualification.</li>
             </ul>
             <button id="start-application-btn" class="btn-primary">Start Application</button>
@@ -162,7 +140,7 @@
 
         <!-- Application Form -->
         <form id="application-form" class="form-step">
-            <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Bus Driver Application Form</h2>
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Application Form</h2>
             <div id="form-steps-container">
                 <!-- Step 1: Roblox Username -->
                 <div id="step-1" class="form-step active">
@@ -175,7 +153,7 @@
 
                 <!-- Step 2: Discord Username -->
                 <div id="step-2" class="form-step">
-                    <label for="discord-username" class="label">Your Discord Username (e.g., YourName#1234):</label>
+                    <label for="discord-username" class="label">Your Discord Username:</label>
                     <input type="text" id="discord-username" name="discordUsername" required class="mb-4">
                     <div class="flex justify-between">
                         <button type="button" class="btn-secondary prev-btn">Previous</button>
@@ -194,225 +172,52 @@
                     </div>
                 </div>
 
-                <!-- Step 4: Why do you want to be a bus driver? (Dropdown with Text Area) -->
+                <!-- Step 4: Role Selection -->
                 <div id="step-4" class="form-step">
-                    <label for="why-bus-driver-select" class="label">Why do you want to be a bus driver for Albury and Wodonga Transport?:</label>
-                    <select id="why-bus-driver-select" name="whyBusDriverSelect" required class="mb-4">
-                        <option value="">Select an option</option>
-                        <option value="I enjoy driving and want to do it professionally.">I enjoy driving and want to do it professionally.</option>
-                        <option value="I want to contribute to the group and help transport people.">I want to contribute to the group and help transport people.</option>
-                        <option value="I like the challenge of managing a route and passengers.">I like the challenge of managing a route and passengers.</option>
-                        <option value="Other">Other (Please specify below)</option>
+                    <label for="role-select" class="label">What role are you looking for?</label>
+                    <select id="role-select" name="role" required class="mb-4">
+                        <option value="">Select a role</option>
+                        <option value="Martins Albury CEO">🟨 Martins Albury CEO</option>
+                        <option value="Martins Manager">🟨 Martins Manager</option>
+                        <option value="Dysons CEO">🟩 Dysons CEO</option>
+                        <option value="Dysons Manager">🟩 Dysons Manager</option>
+                        <option value="Martins Driver">🚌 Martins Driver</option>
+                        <option value="Dysons Driver">🚌 Dysons Driver</option>
                     </select>
-                    <textarea id="why-bus-driver-other" name="whyBusDriverOther" class="mb-4 hidden" placeholder="Please explain your reason here..."></textarea>
                     <div class="flex justify-between">
                         <button type="button" class="btn-secondary prev-btn">Previous</button>
                         <button type="button" class="btn-primary next-btn">Next</button>
                     </div>
                 </div>
 
-                <!-- Step 5: Availability - Preferred Day(s) -->
+                <!-- Step 5: Role-specific Questions -->
                 <div id="step-5" class="form-step">
-                    <label class="label">Preferred Day(s):</label>
-                    <div id="day-selection-box" class="bg-gray-100 rounded-lg p-4 mb-4">
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                            <button type="button" class="day-btn" data-day="Monday">Monday</button>
-                            <button type="button" class="day-btn" data-day="Tuesday">Tuesday</button>
-                            <button type="button" class="day-btn" data-day="Wednesday">Wednesday</button>
-                            <button type="button" class="day-btn" data-day="Thursday">Thursday</button>
-                            <button type="button" class="day-btn" data-day="Friday">Friday</button>
-                            <button type="button" class="day-btn" data-day="Saturday">Saturday</button>
-                            <button type="button" class="day-btn" data-day="Sunday">Sunday</button>
-                        </div>
+                    <div id="role-questions">
+                        <!-- Questions will be dynamically inserted here -->
                     </div>
-                    <div class="flex justify-between">
+                    <div class="flex justify-between mt-4">
                         <button type="button" class="btn-secondary prev-btn">Previous</button>
-                        <button type="button" class="btn-primary next-btn">Next</button>
+                        <button type="button" id="questions-next-btn" class="btn-primary">Next</button>
                     </div>
                 </div>
 
-                <!-- Step 6: Availability - Preferred Time Slot -->
-                <div id="step-6" class="form-step">
-                    <label for="time-zone" class="label">Your Time Zone:</label>
-                    <input type="text" id="time-zone" name="timeZone" placeholder="e.g., GMT, EST, PST" class="mb-4">
-
-                    <label for="preferred-time" class="label">Preferred Time Slot:</label>
-                    <select id="preferred-time" name="preferredTime" required class="mb-4">
-                        <option value="">Select Time</option>
-                        <option value="Morning">Morning</option>
-                        <option value="Afternoon">Afternoon</option>
-                        <option value="Evening">Evening</option>
-                        <option value="Night">Night</option>
-                        <option value="Any Time">Any Time</option>
-                    </select>
-                    <div class="flex justify-between">
+                <!-- Step 6: Agreement Checkbox -->
+                <div id="step-6" class="form-step text-center">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Confirm Your Agreement</h2>
+                    <div id="agreement-checkbox" class="mb-4">
+                        <label class="flex items-center justify-center">
+                            <input type="checkbox" id="agreement-check" name="agreement" required class="form-checkbox h-5 w-5 text-indigo-600 rounded-md">
+                            <span class="ml-2 text-lg text-gray-700">By checking this box, I confirm I have joined the Roblox group and Discord server.</span>
+                        </label>
+                        <p id="agreement-error" class="error-message hidden">You must agree to the terms to submit your application.</p>
+                    </div>
+                    <div class="flex justify-between mt-4">
                         <button type="button" class="btn-secondary prev-btn">Previous</button>
-                        <button type="button" class="btn-primary next-btn">Next</button>
-                    </div>
-                </div>
-
-                <!-- Step 7: Availability - Specific Notes -->
-                <div id="step-7" class="form-step">
-                    <label for="availability-notes" class="label">Any specific notes on your availability (e.g., specific days/hours, holidays):</label>
-                    <textarea id="availability-notes" name="availabilityNotes" class="mb-4"></textarea>
-                    <div class="flex justify-between">
-                        <button type="button" class="btn-secondary prev-btn">Previous</button>
-                        <button type="button" class="btn-primary next-btn">Next</button>
-                    </div>
-                </div>
-
-                <!-- Step 8: How would you handle a hacker/troller/rude passenger? (Dropdown) -->
-                <div id="step-8" class="form-step">
-                    <label for="handle-hacker-select" class="label">How would you handle a hacker disrupting your bus route or the game?</label>
-                    <select id="handle-hacker-select" name="handleHackerSelect" required class="mb-4">
-                        <option value="">Select an action</option>
-                        <option value="Immediately report them to executives.">Immediately report them to executives.</option>
-                        <option value="Politely ask them to stop, then report if they don't.">Politely ask them to stop, then report if they don't.</option>
-                        <option value="Do not engage, and report them quietly to executives.">Do not engage, and report them quietly to executives.</option>
-                        <option value="Other">Other (Please specify below)</option>
-                    </select>
-                    <textarea id="handle-hacker-other" name="handleHackerOther" class="mb-4 hidden" placeholder="Please explain your action..."></textarea>
-
-                    <label for="handle-troller-select" class="label">How would you handle a troller intentionally causing chaos or blocking the bus?</label>
-                    <select id="handle-troller-select" name="handleTrollerSelect" required class="mb-4">
-                        <option value="">Select an action</option>
-                        <option value="Immediately report them to executives.">Immediately report them to executives.</option>
-                        <option value="Politely ask them to stop, then report if they don't.">Politely ask them to stop, then report if they don't.</option>
-                        <option value="Do not engage, and report them quietly to executives.">Do not engage, and report them quietly to executives.</option>
-                        <option value="Other">Other (Please specify below)</option>
-                    </select>
-                    <textarea id="handle-troller-other" name="handleTrollerOther" class="mb-4 hidden" placeholder="Please explain your action..."></textarea>
-
-                    <label for="handle-rude-passenger-select" class="label">How would you handle a passenger being rude or disrespectful to you or other players?</label>
-                    <select id="handle-rude-passenger-select" name="handleRudePassengerSelect" required class="mb-4">
-                        <option value="">Select an action</option>
-                        <option value="Immediately report them to executives.">Immediately report them to executives.</option>
-                        <option value="Politely ask them to stop, then report if they don't.">Politely ask them to stop, then report if they don't.</option>
-                        <option value="Do not engage, and report them quietly to executives.">Do not engage, and report them quietly to executives.</option>
-                        <option value="Other">Other (Please specify below)</option>
-                    </select>
-                    <textarea id="handle-rude-passenger-other" name="handleRudePassengerOther" class="mb-4 hidden" placeholder="Please explain your action..."></textarea>
-
-                    <div class="flex justify-between">
-                        <button type="button" class="btn-secondary prev-btn">Previous</button>
-                        <button type="button" class="btn-primary next-btn">Next</button>
-                    </div>
-                </div>
-
-                <!-- Step 9: Roblox Driving Experience (Dropdown with Text Area) -->
-                <div id="step-9" class="form-step">
-                    <label for="roblox-driving-experience-select" class="label">Do you have any experience driving in Roblox games?</label>
-                    <select id="roblox-driving-experience-select" name="robloxDrivingExperienceSelect" required class="mb-4">
-                        <option value="">Select an option</option>
-                        <option value="None">None</option>
-                        <option value="A little">A little</option>
-                        <option value="A lot">A lot</option>
-                        <option value="Other">Other (Please specify below)</option>
-                    </select>
-                    <textarea id="roblox-driving-experience-other" name="robloxDrivingExperienceOther" class="mb-4 hidden" placeholder="Please describe your experience..."></textarea>
-                    <div class="flex justify-between">
-                        <button type="button" class="btn-secondary prev-btn">Previous</button>
-                        <button type="button" class="btn-primary next-btn">Next</button>
-                    </div>
-                </div>
-
-                <!-- Step 10: Commitment Frequency (Dropdown) -->
-                <div id="step-10" class="form-step">
-                    <label for="commitment-frequency" class="label">How often can you commit to driving buses for our group?</label>
-                    <select id="commitment-frequency" name="commitmentFrequency" required class="mb-4">
-                        <option value="">Select an option</option>
-                        <option value="Daily">Daily</option>
-                        <option value="A few times a week">A few times a week</option>
-                        <option value="Weekly">Weekly</option>
-                        <option value="Weekends only">Weekends only</option>
-                        <option value="A few times a month">A few times a month</option>
-                    </select>
-                    <div class="flex justify-between">
-                        <button type="button" class="btn-secondary prev-btn">Previous</button>
-                        <button type="button" class="btn-primary next-btn">Next</button>
-                    </div>
-                </div>
-
-                <!-- Step 11: Qualities of a Good Bus Driver (Checkboxes) -->
-                <div id="step-11" class="form-step">
-                    <label class="label">What qualities do you think a good bus driver should possess? (Select all that apply)</label>
-                    <div id="qualities-selection-box" class="bg-gray-100 rounded-lg p-4 mb-4">
-                        <div class="grid grid-cols-2 gap-4">
-                            <button type="button" class="quality-checkbox" data-quality="Patient">Patient</button>
-                            <button type="button" class="quality-checkbox" data-quality="Friendly">Friendly</button>
-                            <button type="button" class="quality-checkbox" data-quality="Responsible">Responsible</button>
-                            <button type="button" class="quality-checkbox" data-quality="Good Communicator">Good Communicator</button>
-                            <button type="button" class="quality-checkbox" data-quality="Calm under pressure">Calm under pressure</button>
-                            <button type="button" class="quality-checkbox" data-quality="Knowledge of rules">Knowledge of rules</button>
-                        </div>
-                    </div>
-                    <div class="flex justify-between">
-                        <button type="button" class="btn-secondary prev-btn">Previous</button>
-                        <button type="button" class="btn-primary next-btn">Next</button>
-                    </div>
-                </div>
-
-                <!-- Step 12: Problem Solving (Textarea) -->
-                <div id="step-12" class="form-step">
-                    <label for="problem-solving" class="label">Describe a time you had to solve a problem, either in a game or in real life. How did you approach it?</label>
-                    <textarea id="problem-solving" name="problemSolving" required class="mb-4"></textarea>
-                    <div class="flex justify-between">
-                        <button type="button" class="btn-secondary prev-btn">Previous</button>
-                        <button type="button" class="btn-primary next-btn">Next</button>
-                    </div>
-                </div>
-
-                <!-- Step 13: Disruptive Passenger (Textarea) -->
-                <div id="step-13" class="form-step">
-                    <label for="handle-disruptive-passenger" class="label">How would you handle a disruptive or uncooperative passenger on your bus?</label>
-                    <textarea id="handle-disruptive-passenger" name="handleDisruptivePassenger" required class="mb-4"></textarea>
-                    <div class="flex justify-between">
-                        <button type="button" class="btn-secondary prev-btn">Previous</button>
-                        <button type="button" class="btn-primary next-btn">Next</button>
-                    </div>
-                </div>
-
-                <!-- Step 14: Bus Breakdown (Textarea) -->
-                <div id="step-14" class="form-step">
-                    <label for="bus-breakdown" class="label">What would you do if your bus broke down during a route with passengers on board?</label>
-                    <textarea id="bus-breakdown" name="busBreakdown" required class="mb-4"></textarea>
-                    <div class="flex justify-between">
-                        <button type="button" class="btn-secondary prev-btn">Previous</button>
-                        <button type="button" class="btn-primary next-btn">Next</button>
-                    </div>
-                </div>
-
-                <!-- Step 15: Roblox ToS and Community Guidelines (Textarea) -->
-                <div id="step-15" class="form-step">
-                    <label for="roblox-tos" class="label">Are you familiar with Roblox's Terms of Service and Community Guidelines? How important are they for a bus driver?</label>
-                    <textarea id="roblox-tos" name="robloxTos" required class="mb-4"></textarea>
-                    <div class="flex justify-between">
-                        <button type="button" class="btn-secondary prev-btn">Previous</button>
-                        <button type="button" class="btn-primary next-btn">Next</button>
-                    </div>
-                </div>
-
-                <!-- Step 16: Discord Server and Roblox Group Confirmation -->
-                <div id="step-16" class="form-step">
-                    <div class="flex items-center mb-4">
-                        <input type="checkbox" id="discord-confirm" name="discordConfirm" class="mr-2 h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
-                        <label for="discord-confirm" class="label mb-0">I confirm I am a member of the "Albury and Wodonga Transport" Discord server.</label>
-                    </div>
-                    <p id="discord-confirm-error" class="error-message hidden">You must confirm your Discord membership.</p>
-
-                    <div class="flex items-center mb-4">
-                        <input type="checkbox" id="roblox-group-confirm" name="robloxGroupConfirm" class="mr-2 h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
-                        <label for="roblox-group-confirm" class="label mb-0">I confirm I am a member of the "Public Transport Victoria ( PTV)" Roblox group.</label>
-                    </div>
-                    <p id="roblox-group-confirm-error" class="error-message hidden">You must confirm your Roblox group membership.</p>
-
-                    <div class="flex justify-between">
-                        <button type="button" class="btn-secondary prev-btn">Previous</button>
-                        <button type="submit" class="btn-primary">Submit Application</button>
+                        <button type="submit" id="questions-submit-btn" class="btn-primary">Submit Application</button>
                     </div>
                 </div>
             </div>
-            <!-- Progress Bar (Optional, but good for UX) -->
+            <!-- Progress Bar -->
             <div class="w-full bg-gray-200 rounded-full h-2.5 mt-8">
                 <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full" style="width: 0%;"></div>
             </div>
@@ -433,7 +238,47 @@
         </div>
     </div>
 
-    <script>
+    <!-- Firebase SDK Imports -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global variables provided by the Canvas environment
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let db, auth, userId;
+        let isAuthReady = false;
+
+        // Initialize Firebase and authenticate user
+        if (firebaseConfig) {
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+            
+            // Sign in with the provided token or anonymously
+            (async () => {
+                try {
+                    if (initialAuthToken) {
+                        await signInWithCustomToken(auth, initialAuthToken);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                    userId = auth.currentUser.uid;
+                    isAuthReady = true;
+                    console.log('Firebase initialized and user authenticated with ID:', userId);
+                } catch (error) {
+                    console.error("Error initializing Firebase or authenticating:", error);
+                    showMessageBox('Could not connect to the database. Please refresh the page. (Error: ' + error.message + ')');
+                }
+            })();
+        } else {
+            console.error("Firebase config is missing. App cannot save data.");
+            showMessageBox('Firebase configuration not found. Application cannot run.');
+        }
+
         const requirementsScreen = document.getElementById('requirements-screen');
         const startApplicationBtn = document.getElementById('start-application-btn');
         const applicationForm = document.getElementById('application-form');
@@ -444,17 +289,121 @@
         const messageBoxOverlay = document.getElementById('message-box-overlay');
         const messageBoxText = document.getElementById('message-box-text');
         const messageBoxOkBtn = document.getElementById('message-box-ok-btn');
+        const questionsNextBtn = document.getElementById('questions-next-btn');
 
         let currentStep = 0;
-        const totalSteps = formSteps.length;
-        let selectedDays = [];
-        let selectedQualities = [];
+        let currentQuestionIndex = 0;
+        let selectedRole = '';
+        const formAnswers = {}; // Object to store all form data, including question answers
+        
+        // Discord Webhook URL
+        const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1415590171394572369/VuKSQ2ovHfQKcKVGuSAk9lgSe1eGXcPwAJ6k1Zo9U4GLM1npy1YGnFCbY6i8B3M6Q422';
 
-        // Discord Webhook URL - REPLACE THIS WITH YOUR ACTUAL WEBHOOK URL
-        const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1398532071642894376/2GhPJl_ypmC_3xxkBF3VQMBlRQqf2rSZgOdAQTj6wX_lzdyDoYoC_8MpqbwvXWm-9lKc';
-
-        // Load saved data from localStorage
-        const savedFormData = JSON.parse(localStorage.getItem('busDriverFormData')) || {};
+        // Role-specific questions data
+        const roleQuestions = {
+            'Martins Albury CEO': [
+                "If you could change one thing about the company to make it better, what would it be and why?",
+                "How would you encourage your team members to work together?",
+                "A big event is happening in-game, and many new players are joining. How would you prepare the company?",
+                "How would you handle a situation where a lot of players are complaining on Discord about a recent update?",
+                "What are some key qualities a good leader should have?",
+                "How would you train a new manager for your team?",
+                "How do you plan to make our company stand out from others?",
+                "Describe a time you solved a problem on your own.",
+                "What is the most important rule for a CEO to follow?",
+                "How would you ensure all your team members feel heard and respected?",
+                "A player is being mean to a staff member. How would you respond?",
+                "How do you stay organized when you have a lot of tasks?",
+                "What motivates you to take on a leadership role?",
+                "If you had to create a new company rule, what would it be and why?",
+                "Why do you want to be the CEO of this division?"
+            ],
+            'Martins Manager': [
+                "How would you handle a conflict between two drivers on your team?",
+                "What is the most important skill for a manager to have?",
+                "A new driver is struggling with their first few shifts. How would you help them?",
+                "How would you make sure all drivers are following the safety rules?",
+                "What would you do if you saw a driver breaking a major rule?",
+                "How would you celebrate your team's achievements?",
+                "A player reports that a driver was being rude. How would you investigate and handle this?",
+                "What makes you a good team player?",
+                "How would you handle a situation where a player is spamming the chat?",
+                "What do you think is the biggest challenge a manager faces?",
+                "How would you communicate important announcements to your team?",
+                "How do you plan to be a positive role model for other drivers?",
+                "How do you stay calm when things get stressful?",
+                "Describe a time you had to teach someone something new.",
+                "Why do you want to be a manager for this division?"
+            ],
+            'Dysons CEO': [
+                "If you could change one thing about the company to make it better, what would it be and why?",
+                "How would you encourage your team members to work together?",
+                "A big event is happening in-game, and many new players are joining. How would you prepare the company?",
+                "How would you handle a situation where a lot of players are complaining on Discord about a recent update?",
+                "What are some key qualities a good leader should have?",
+                "How would you train a new manager for your team?",
+                "How do you plan to make our company stand out from others?",
+                "Describe a time you solved a problem on your own.",
+                "What is the most important rule for a CEO to follow?",
+                "How would you ensure all your team members feel heard and respected?",
+                "A player is being mean to a staff member. How would you respond?",
+                "How do you stay organized when you have a lot of tasks?",
+                "What motivates you to take on a leadership role?",
+                "If you had to create a new company rule, what would it be and why?",
+                "Why do you want to be the CEO of this division?"
+            ],
+            'Dysons Manager': [
+                "How would you handle a conflict between two drivers on your team?",
+                "What is the most important skill for a manager to have?",
+                "A new driver is struggling with their first few shifts. How would you help them?",
+                "How would you make sure all drivers are following the safety rules?",
+                "What would you do if you saw a driver breaking a major rule?",
+                "How would you celebrate your team's achievements?",
+                "A player reports that a driver was being rude. How would you investigate and handle this?",
+                "What makes you a good team player?",
+                "How would you handle a situation where a player is spamming the chat?",
+                "What do you think is the biggest challenge a manager faces?",
+                "How would you communicate important announcements to your team?",
+                "How do you plan to be a positive role model for other drivers?",
+                "How do you stay calm when things get stressful?",
+                "Describe a time you had to teach someone something new.",
+                "Why do you want to be a manager for this division?"
+            ],
+            'Martins Driver': [
+                "Why do you want to be a bus driver for us?",
+                "How would you handle a passenger who is being loud and disruptive?",
+                "What is the most important rule of the road in the game?",
+                "A passenger asks you for help, but you're in the middle of a route. What do you do?",
+                "How would you make a passenger's experience on your bus enjoyable?",
+                "What does it mean to be a responsible driver?",
+                "You see another driver making a mistake. How do you respond?",
+                "How would you handle a bus that has a minor issue, like a door not closing properly?",
+                "What is your approach to staying on top of bus route changes or new rules?",
+                "How would you assist a passenger who needs help with directions?",
+                "What is your experience with customer service?",
+                "How do you stay calm under pressure?",
+                "What steps would you take to correctly report a rule-breaking player or staff member?",
+                "How would you maintain the cleanliness of your bus?",
+                "What qualities do you think make a great bus driver?"
+            ],
+            'Dysons Driver': [
+                "Why do you want to be a bus driver for us?",
+                "How would you handle a passenger who is being loud and disruptive?",
+                "What is the most important rule of the road in the game?",
+                "A passenger asks you for help, but you're in the middle of a route. What do you do?",
+                "How would you make a passenger's experience on your bus enjoyable?",
+                "What does it mean to be a responsible driver?",
+                "You see another driver making a mistake. How do you respond?",
+                "How would you handle a bus that has a minor issue, like a door not closing properly?",
+                "What is your approach to staying on top of bus route changes or new rules?",
+                "How would you assist a passenger who needs help with directions?",
+                "What is your experience with customer service?",
+                "How do you stay calm under pressure?",
+                "What steps would you take to correctly report a rule-breaking player or staff member?",
+                "How would you maintain the cleanliness of your bus?",
+                "What qualities do you think make a great bus driver?"
+            ]
+        };
 
         function showMessageBox(message) {
             messageBoxText.textContent = message;
@@ -469,69 +418,6 @@
 
         messageBoxOkBtn.addEventListener('click', hideMessageBox);
 
-        function saveFormData() {
-            const formData = {};
-            // Save data from text, number, and select inputs
-            document.querySelectorAll('input, textarea, select').forEach(input => {
-                if (input.type === 'checkbox') {
-                    formData[input.name] = input.checked;
-                } else {
-                    formData[input.name] = input.value;
-                }
-            });
-            // Save selected days and qualities
-            formData['preferredDays'] = selectedDays;
-            formData['selectedQualities'] = selectedQualities;
-            localStorage.setItem('busDriverFormData', JSON.stringify(formData));
-        }
-
-        function loadFormData() {
-            for (const key in savedFormData) {
-                const input = document.querySelector(`[name="${key}"]`);
-                if (input) {
-                    if (input.type === 'checkbox') {
-                        input.checked = savedFormData[key];
-                    } else {
-                        input.value = savedFormData[key];
-                    }
-                }
-            }
-            // Load selected days and activate buttons
-            if (savedFormData.preferredDays) {
-                selectedDays = savedFormData.preferredDays;
-                document.querySelectorAll('.day-btn').forEach(btn => {
-                    if (selectedDays.includes(btn.dataset.day)) {
-                        btn.classList.add('active');
-                    }
-                });
-            }
-            // Load selected qualities and activate buttons
-            if (savedFormData.selectedQualities) {
-                selectedQualities = savedFormData.selectedQualities;
-                document.querySelectorAll('.quality-checkbox').forEach(btn => {
-                    if (selectedQualities.includes(btn.dataset.quality)) {
-                        btn.classList.add('active');
-                    }
-                });
-            }
-
-            // Show/hide "other" textareas based on loaded data
-            ['why-bus-driver', 'handle-hacker', 'handle-troller', 'handle-rude-passenger', 'roblox-driving-experience'].forEach(prefix => {
-                const select = document.getElementById(`${prefix}-select`);
-                const otherTextarea = document.getElementById(`${prefix}-other`);
-                if (select && otherTextarea) {
-                    if (select.value === 'Other') {
-                        otherTextarea.classList.remove('hidden');
-                        if (savedFormData[`${prefix}Other`]) {
-                            otherTextarea.value = savedFormData[`${prefix}Other`];
-                        }
-                    } else {
-                        otherTextarea.classList.add('hidden');
-                    }
-                }
-            });
-        }
-
         function showStep(stepIndex) {
             formSteps.forEach((step, index) => {
                 if (index === stepIndex) {
@@ -541,92 +427,101 @@
                 }
             });
             updateProgressBar();
-            // Scroll to top of the form for better UX on navigation
             applicationForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function updateProgressBar() {
-            const progress = ((currentStep + 1) / totalSteps) * 100;
+            let totalSteps = formSteps.length;
+            let currentProgressPoint = currentStep + 1;
+            
+            // Adjust progress for role questions
+            if (currentStep === 4 && selectedRole && roleQuestions[selectedRole]) {
+                totalSteps = formSteps.length - 1 + roleQuestions[selectedRole].length;
+                currentProgressPoint = currentStep + currentQuestionIndex;
+            }
+
+            const progress = (currentProgressPoint / totalSteps) * 100;
             progressBar.style.width = `${progress}%`;
         }
 
         function validateStep(stepIndex) {
             let isValid = true;
             const currentStepElement = formSteps[stepIndex];
-            const inputs = currentStepElement.querySelectorAll('input[required], select[required], textarea[required]');
-
-            inputs.forEach(input => {
-                if (input.type === 'checkbox') {
-                    if (!input.checked) {
-                        isValid = false;
-                        document.getElementById(`${input.id}-error`).classList.remove('hidden');
-                    } else {
-                        document.getElementById(`${input.id}-error`).classList.add('hidden');
-                    }
-                } else if (!input.value.trim()) {
+            
+            if (stepIndex <= 2) { // Validate Roblox, Discord, and Age
+                const input = currentStepElement.querySelector('[required]');
+                if (!input.value.trim()) {
                     isValid = false;
                     input.style.borderColor = '#ef4444';
                 } else {
                     input.style.borderColor = '#d1d5db';
                 }
-            });
 
-            const otherInputs = currentStepElement.querySelectorAll('select');
-            otherInputs.forEach(select => {
-                if (select.value === 'Other') {
-                    const otherTextarea = document.getElementById(`${select.id.replace('-select', '-other')}`);
-                    if (!otherTextarea || !otherTextarea.value.trim()) {
+                if (stepIndex === 2) {
+                    const ageError = document.getElementById('age-error');
+                    if (parseInt(input.value) < 13) {
                         isValid = false;
-                        otherTextarea.style.borderColor = '#ef4444';
+                        ageError.classList.remove('hidden');
+                        input.style.borderColor = '#ef4444';
                     } else {
-                        otherTextarea.style.borderColor = '#d1d5db';
+                        ageError.classList.add('hidden');
                     }
                 }
-            });
-
-            if (stepIndex === 2) { // Age validation
-                const ageInput = document.getElementById('age');
-                const ageError = document.getElementById('age-error');
-                if (parseInt(ageInput.value) < 13) {
+            } else if (stepIndex === 3) { // Validate Role Selection
+                const roleSelect = document.getElementById('role-select');
+                if (!roleSelect.value) {
                     isValid = false;
-                    ageError.classList.remove('hidden');
-                    ageInput.style.borderColor = '#ef4444';
+                    roleSelect.style.borderColor = '#ef4444';
                 } else {
-                    ageError.classList.add('hidden');
-                    ageInput.style.borderColor = '#d1d5db';
+                    isValid = true;
+                    selectedRole = roleSelect.value;
+                    roleSelect.style.borderColor = '#d1d5db';
                 }
-            }
-
-            if (stepIndex === 4) { // Day selection validation
-                if (selectedDays.length === 0) {
+            } else if (stepIndex === 4) { // Validate Questions
+                const currentQuestionInput = document.getElementById(`question-${currentQuestionIndex}`);
+                if (currentQuestionInput && !currentQuestionInput.value.trim()) {
                     isValid = false;
+                    currentQuestionInput.style.borderColor = '#ef4444';
+                } else if (currentQuestionInput) {
+                    isValid = true;
+                    currentQuestionInput.style.borderColor = '#d1d5db';
                 }
-            }
-
-            if (stepIndex === 10) { // Qualities selection validation
-                if (selectedQualities.length === 0) {
+            } else if (stepIndex === 5) { // Validate Agreement
+                // Re-defining these variables here to ensure they are in scope
+                const agreementCheck = document.getElementById('agreement-check');
+                const agreementError = document.getElementById('agreement-error');
+                if (!agreementCheck.checked) {
                     isValid = false;
+                    agreementError.classList.remove('hidden');
+                } else {
+                    isValid = true;
+                    agreementError.classList.add('hidden');
                 }
             }
             
-            if (stepIndex === 15) { // Confirmation checkboxes validation
-                const discordCheckbox = document.getElementById('discord-confirm');
-                const robloxGroupCheckbox = document.getElementById('roblox-group-confirm');
-                if (!discordCheckbox.checked) {
-                    isValid = false;
-                    document.getElementById('discord-confirm-error').classList.remove('hidden');
-                } else {
-                    document.getElementById('discord-confirm-error').classList.add('hidden');
-                }
-                if (!robloxGroupCheckbox.checked) {
-                    isValid = false;
-                    document.getElementById('roblox-group-confirm-error').classList.remove('hidden');
-                } else {
-                    document.getElementById('roblox-group-confirm-error').classList.add('hidden');
-                }
-            }
-
             return isValid;
+        }
+        
+        function showQuestion() {
+            const questionsContainer = document.getElementById('role-questions');
+            questionsContainer.innerHTML = ''; // Clear previous question
+            
+            if (roleQuestions[selectedRole] && currentQuestionIndex < roleQuestions[selectedRole].length) {
+                const question = roleQuestions[selectedRole][currentQuestionIndex];
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('mb-4');
+                questionDiv.innerHTML = `
+                    <label for="question-${currentQuestionIndex}" class="label">${currentQuestionIndex + 1}. ${question}</label>
+                    <textarea id="question-${currentQuestionIndex}" name="question-${currentQuestionIndex}" required class="mb-4">${formAnswers[`question-${currentQuestionIndex}`] || ''}</textarea>
+                `;
+                questionsContainer.appendChild(questionDiv);
+                questionsNextBtn.classList.remove('hidden');
+            } else {
+                questionsNextBtn.classList.add('hidden');
+                currentStep++;
+                showStep(currentStep);
+            }
+            updateProgressBar();
         }
 
         // Event Listeners
@@ -634,129 +529,128 @@
             requirementsScreen.classList.add('hidden');
             applicationForm.classList.add('active');
             showStep(currentStep);
-            loadFormData();
         });
 
-        // Toggle visibility of "Other" text areas based on select box value
-        document.querySelectorAll('#why-bus-driver-select, #handle-hacker-select, #handle-troller-select, #handle-rude-passenger-select, #roblox-driving-experience-select').forEach(select => {
-            select.addEventListener('change', (event) => {
-                const otherTextarea = document.getElementById(`${event.target.id.replace('-select', '-other')}`);
-                if (otherTextarea) {
-                    if (event.target.value === 'Other') {
-                        otherTextarea.classList.remove('hidden');
-                        otherTextarea.focus();
-                    } else {
-                        otherTextarea.classList.add('hidden');
-                        otherTextarea.value = '';
-                    }
-                }
-            });
-        });
-
-        // Day button logic
-        document.querySelectorAll('.day-btn').forEach(button => {
-            button.addEventListener('click', (event) => {
-                const day = event.target.dataset.day;
-                if (selectedDays.includes(day)) {
-                    selectedDays = selectedDays.filter(d => d !== day);
-                    event.target.classList.remove('active');
-                } else {
-                    selectedDays.push(day);
-                    event.target.classList.add('active');
-                }
-            });
-        });
-
-        // Qualities checkbox logic
-        document.querySelectorAll('.quality-checkbox').forEach(button => {
-            button.addEventListener('click', (event) => {
-                const quality = event.target.dataset.quality;
-                if (selectedQualities.includes(quality)) {
-                    selectedQualities = selectedQualities.filter(q => q !== quality);
-                    event.target.classList.remove('active');
-                } else {
-                    selectedQualities.push(quality);
-                    event.target.classList.add('active');
-                }
-            });
+        document.getElementById('role-select').addEventListener('change', (event) => {
+            selectedRole = event.target.value;
         });
 
         document.querySelectorAll('.next-btn').forEach(button => {
             button.addEventListener('click', () => {
                 if (validateStep(currentStep)) {
-                    saveFormData();
+                    // Save the current step's input before moving on
+                    const inputElement = formSteps[currentStep].querySelector('input, select, textarea');
+                    if (inputElement) {
+                        formAnswers[inputElement.name] = inputElement.value;
+                    }
+
+                    if (currentStep === 3) {
+                        currentQuestionIndex = 0;
+                        showStep(currentStep + 1);
+                        showQuestion();
+                    } else {
+                        currentStep++;
+                        if (currentStep < formSteps.length) {
+                            showStep(currentStep);
+                        }
+                    }
+                }
+            });
+        });
+
+        questionsNextBtn.addEventListener('click', () => {
+            if (validateStep(currentStep)) {
+                const currentQuestionInput = document.getElementById(`question-${currentQuestionIndex}`);
+                if (currentQuestionInput) {
+                    formAnswers[currentQuestionInput.name] = currentQuestionInput.value;
+                }
+                
+                currentQuestionIndex++;
+                if (currentQuestionIndex < roleQuestions[selectedRole].length) {
+                    showQuestion();
+                } else {
                     currentStep++;
-                    if (currentStep < totalSteps) {
+                    showStep(currentStep);
+                }
+            }
+        });
+
+        document.querySelectorAll('.prev-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                if (currentStep === 5) { // From agreement screen to last question
+                    currentStep--;
+                    currentQuestionIndex = roleQuestions[selectedRole].length - 1;
+                    showStep(currentStep);
+                    showQuestion();
+                } else if (currentStep === 4) { // From a question to the previous
+                    currentQuestionIndex--;
+                    if (currentQuestionIndex < 0) {
+                        currentStep--;
+                        showStep(currentStep);
+                    } else {
+                        showQuestion();
+                    }
+                } else {
+                    currentStep--;
+                    if (currentStep >= 0) {
+                        const inputElement = formSteps[currentStep].querySelector('input, select, textarea');
+                        if (inputElement) {
+                            inputElement.value = formAnswers[inputElement.name] || '';
+                        }
                         showStep(currentStep);
                     }
                 }
             });
         });
 
-        document.querySelectorAll('.prev-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                saveFormData();
-                currentStep--;
-                if (currentStep >= 0) {
-                    showStep(currentStep);
-                }
-            });
-        });
-
         document.getElementById('application-form').addEventListener('submit', async (event) => {
             event.preventDefault();
-            if (validateStep(currentStep)) {
-                saveFormData();
 
+            if (!isAuthReady) {
+                showMessageBox('Database connection is not ready. Please try again in a moment.');
+                return;
+            }
+
+            // Define agreement variables locally to avoid reference errors
+            const agreementCheck = document.getElementById('agreement-check');
+            if (agreementCheck && !agreementCheck.checked) {
+                showMessageBox('You must agree to the terms to submit your application.');
+                return;
+            }
+
+            if (validateStep(currentStep)) {
                 const formData = new FormData(event.target);
                 const data = {};
                 for (let [key, value] of formData.entries()) {
                     data[key] = value;
                 }
-                data['discordConfirm'] = document.getElementById('discord-confirm').checked;
-                data['robloxGroupConfirm'] = document.getElementById('roblox-group-confirm').checked;
-
-
-                // Overwrite with 'Other' textarea content if applicable
-                const otherInputs = document.querySelectorAll('textarea[name$="Other"]:not(.hidden)');
-                otherInputs.forEach(textarea => {
-                    const baseName = textarea.name.replace('Other', 'Select');
-                    if (data[baseName] === 'Other') {
-                        data[baseName] = textarea.value;
-                    }
-                });
-
-                console.log('Application Data:', data);
-
-                let discordMessageContent = "New Bus Driver Application Received!\n\n";
-                discordMessageContent += `**Roblox Username:** ${data.robloxUsername}\n`;
-                discordMessageContent += `**Discord Username:** ${data.discordUsername}\n`;
-                discordMessageContent += `**Age:** ${data.age}\n\n`;
-                discordMessageContent += `**Why do you want to be a bus driver?**\n${data.whyBusDriverSelect}\n\n`;
-                discordMessageContent += `**Availability:**\n`;
-                discordMessageContent += `  - **Preferred Day(s):** ${selectedDays.join(', ') || 'None selected'}\n`;
-                discordMessageContent += `  - **Time Zone:** ${data.timeZone || 'Not specified'}\n`;
-                discordMessageContent += `  - **Preferred Time Slot:** ${data.preferredTime}\n`;
-                if (data.availabilityNotes) {
-                    discordMessageContent += `  - **Specific Notes:** ${data.availabilityNotes}\n\n`;
-                } else {
-                    discordMessageContent += `\n`;
+                
+                // Combine form data with dynamically collected question answers
+                const finalData = { ...data, ...formAnswers };
+                
+                let discordMessageContent = `New Application Received for **${finalData.role}**!\n\n`;
+                discordMessageContent += `**Roblox Username:** ${finalData.robloxUsername}\n`;
+                discordMessageContent += `**Discord Username:** ${finalData.discordUsername}\n`;
+                discordMessageContent += `**Age:** ${finalData.age}\n\n`;
+                
+                const questionsList = roleQuestions[finalData.role];
+                if (questionsList) {
+                    discordMessageContent += `**Role-Specific Questions:**\n`;
+                    questionsList.forEach((question, index) => {
+                        const answerKey = `question-${index}`;
+                        discordMessageContent += `  - **${question}**\n`;
+                        discordMessageContent += `    - ${finalData[answerKey] || 'No answer provided'}\n`;
+                    });
+                    discordMessageContent += "\n";
                 }
-                discordMessageContent += `**How would you handle the following situations?**\n`;
-                discordMessageContent += `  - **Hacker:** ${data.handleHackerSelect}\n`;
-                discordMessageContent += `  - **Troller:** ${data.handleTrollerSelect}\n`;
-                discordMessageContent += `  - **Rude Passenger:** ${data.handleRudePassengerSelect}\n\n`;
-                discordMessageContent += `**Roblox Driving Experience:** ${data.robloxDrivingExperienceSelect}\n`;
-                discordMessageContent += `**Disruptive Passenger Handling:** ${data.handleDisruptivePassenger}\n`;
-                discordMessageContent += `**Bus Breakdown Handling:** ${data.busBreakdown}\n`;
-                discordMessageContent += `**Roblox ToS & Community Guidelines:** ${data.robloxTos}\n`;
-                discordMessageContent += `**Commitment Frequency:** ${data.commitmentFrequency}\n`;
-                discordMessageContent += `**Qualities of a Good Bus Driver:** ${selectedQualities.join(', ') || 'None selected'}\n`;
-                discordMessageContent += `**Problem Solving:** ${data.problemSolving}\n`;
-                discordMessageContent += `**Discord Server Confirmed:** ${data.discordConfirm ? 'Yes' : 'No'}\n`;
-                discordMessageContent += `**Roblox Group Confirmed:** ${data.robloxGroupConfirm ? 'Yes' : 'No'}\n`;
 
+                // Save to Firestore
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'applications', userId);
                 try {
+                    await setDoc(docRef, finalData);
+                    console.log("Application saved to Firestore with ID:", userId);
+
+                    // Send to Discord Webhook
                     const response = await fetch(DISCORD_WEBHOOK_URL, {
                         method: 'POST',
                         headers: {
@@ -767,8 +661,6 @@
 
                     if (response.ok) {
                         console.log('Application successfully sent to Discord!');
-                        localStorage.removeItem('busDriverFormData');
-
                         applicationForm.classList.remove('active');
                         applicationForm.classList.add('form-step');
                         thankYouScreen.classList.add('active');
@@ -777,8 +669,8 @@
                         showMessageBox('Failed to submit application. Please try again later. (Error: ' + response.status + ')');
                     }
                 } catch (error) {
-                    console.error('Error sending application to Discord:', error);
-                    showMessageBox('An error occurred while submitting your application. Please check your internet connection and try again.');
+                    console.error('Error submitting application:', error);
+                    showMessageBox('An error occurred while submitting your application. Please try again.');
                 }
             }
         });
