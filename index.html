@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Albury and Wodonga Transport - Staff Application</title>
+    <title>Albury and Wodonga Transport - Bus Driver Application</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts - Inter -->
@@ -244,11 +244,10 @@
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // IMPORTANT: The following code is wrapped in a DOMContentLoaded listener to ensure it only runs after the page is fully loaded.
-        // This prevents issues where the JavaScript might try to find and attach listeners to elements that don't exist yet on some web servers.
         document.addEventListener('DOMContentLoaded', () => {
 
-            // Global variables provided by the Canvas environment
+            console.log('DOM fully loaded and parsed. Attaching event listener to Start Application button.');
+
             const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
             const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
             const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
@@ -256,13 +255,11 @@
             let db, auth, userId;
             let isAuthReady = false;
 
-            // Initialize Firebase and authenticate user
             if (firebaseConfig) {
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
                 
-                // Sign in with the provided token or anonymously
                 (async () => {
                     try {
                         if (initialAuthToken) {
@@ -298,12 +295,10 @@
             let currentStep = 0;
             let currentQuestionIndex = 0;
             let selectedRole = '';
-            const formAnswers = {}; // Object to store all form data, including question answers
+            const formAnswers = {};
             
-            // Discord Webhook URL
             const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1415590171394572369/VuKSQ2ovHfQKcKVGuSAk9lgSe1eGXcPqAJ6k1Zo9U4GLM1npy1YGnFCbY6i8B3M6Q422';
 
-            // Role-specific questions data
             const roleQuestions = {
                 'Martins Albury CEO': [
                     "If you could change one thing about the company to make it better, what would it be and why?",
@@ -438,7 +433,6 @@
                 let totalSteps = formSteps.length;
                 let currentProgressPoint = currentStep + 1;
                 
-                // Adjust progress for role questions
                 if (currentStep === 4 && selectedRole && roleQuestions[selectedRole]) {
                     totalSteps = formSteps.length - 1 + roleQuestions[selectedRole].length;
                     currentProgressPoint = currentStep + currentQuestionIndex;
@@ -452,7 +446,7 @@
                 let isValid = true;
                 const currentStepElement = formSteps[stepIndex];
                 
-                if (stepIndex <= 2) { // Validate Roblox, Discord, and Age
+                if (stepIndex <= 2) {
                     const input = currentStepElement.querySelector('[required]');
                     if (!input.value.trim()) {
                         isValid = false;
@@ -471,7 +465,7 @@
                             ageError.classList.add('hidden');
                         }
                     }
-                } else if (stepIndex === 3) { // Validate Role Selection
+                } else if (stepIndex === 3) {
                     const roleSelect = document.getElementById('role-select');
                     if (!roleSelect.value) {
                         isValid = false;
@@ -481,7 +475,7 @@
                         selectedRole = roleSelect.value;
                         roleSelect.style.borderColor = '#d1d5db';
                     }
-                } else if (stepIndex === 4) { // Validate Questions
+                } else if (stepIndex === 4) {
                     const currentQuestionInput = document.getElementById(`question-${currentQuestionIndex}`);
                     if (currentQuestionInput && !currentQuestionInput.value.trim()) {
                         isValid = false;
@@ -490,8 +484,7 @@
                         isValid = true;
                         currentQuestionInput.style.borderColor = '#d1d5db';
                     }
-                } else if (stepIndex === 5) { // Validate Agreement
-                    // Re-defining these variables here to ensure they are in scope
+                } else if (stepIndex === 5) {
                     const agreementCheck = document.getElementById('agreement-check');
                     const agreementError = document.getElementById('agreement-error');
                     if (!agreementCheck.checked) {
@@ -508,7 +501,7 @@
             
             function showQuestion() {
                 const questionsContainer = document.getElementById('role-questions');
-                questionsContainer.innerHTML = ''; // Clear previous question
+                questionsContainer.innerHTML = '';
                 
                 if (roleQuestions[selectedRole] && currentQuestionIndex < roleQuestions[selectedRole].length) {
                     const question = roleQuestions[selectedRole][currentQuestionIndex];
@@ -542,7 +535,6 @@
             document.querySelectorAll('.next-btn').forEach(button => {
                 button.addEventListener('click', () => {
                     if (validateStep(currentStep)) {
-                        // Save the current step's input before moving on
                         const inputElement = formSteps[currentStep].querySelector('input, select, textarea');
                         if (inputElement) {
                             formAnswers[inputElement.name] = inputElement.value;
@@ -581,12 +573,12 @@
 
             document.querySelectorAll('.prev-btn').forEach(button => {
                 button.addEventListener('click', () => {
-                    if (currentStep === 5) { // From agreement screen to last question
+                    if (currentStep === 5) {
                         currentStep--;
                         currentQuestionIndex = roleQuestions[selectedRole].length - 1;
                         showStep(currentStep);
                         showQuestion();
-                    } else if (currentStep === 4) { // From a question to the previous
+                    } else if (currentStep === 4) {
                         currentQuestionIndex--;
                         if (currentQuestionIndex < 0) {
                             currentStep--;
@@ -615,7 +607,6 @@
                     return;
                 }
 
-                // Define agreement variables locally to avoid reference errors
                 const agreementCheck = document.getElementById('agreement-check');
                 if (agreementCheck && !agreementCheck.checked) {
                     showMessageBox('You must agree to the terms to submit your application.');
@@ -629,7 +620,6 @@
                         data[key] = value;
                     }
                     
-                    // Combine form data with dynamically collected question answers
                     const finalData = { ...data, ...formAnswers };
                     
                     let discordMessageContent = `New Application Received for **${finalData.role}**!\n\n`;
@@ -648,13 +638,11 @@
                         discordMessageContent += "\n";
                     }
 
-                    // Save to Firestore
                     const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'applications', userId);
                     try {
                         await setDoc(docRef, finalData);
                         console.log("Application saved to Firestore with ID:", userId);
 
-                        // Send to Discord Webhook
                         const response = await fetch(DISCORD_WEBHOOK_URL, {
                             method: 'POST',
                             headers: {
@@ -682,8 +670,7 @@
             applicationForm.classList.add('form-step');
             thankYouScreen.classList.add('form-step');
             requirementsScreen.classList.remove('hidden');
-
-        }); // End of DOMContentLoaded listener
+        });
     </script>
 </body>
 </html>
