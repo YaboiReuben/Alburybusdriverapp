@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Albury and Wodonga Transport - Bus Driver Application</title>
+    <title>Albury and Wodonga Transport - Staff Application</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts - Inter -->
@@ -244,440 +244,446 @@
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Global variables provided by the Canvas environment
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        // IMPORTANT: The following code is wrapped in a DOMContentLoaded listener to ensure it only runs after the page is fully loaded.
+        // This prevents issues where the JavaScript might try to find and attach listeners to elements that don't exist yet on some web servers.
+        document.addEventListener('DOMContentLoaded', () => {
 
-        let db, auth, userId;
-        let isAuthReady = false;
+            // Global variables provided by the Canvas environment
+            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+            const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+            const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
-        // Initialize Firebase and authenticate user
-        if (firebaseConfig) {
-            const app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
-            
-            // Sign in with the provided token or anonymously
-            (async () => {
-                try {
-                    if (initialAuthToken) {
-                        await signInWithCustomToken(auth, initialAuthToken);
-                    } else {
-                        await signInAnonymously(auth);
+            let db, auth, userId;
+            let isAuthReady = false;
+
+            // Initialize Firebase and authenticate user
+            if (firebaseConfig) {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                
+                // Sign in with the provided token or anonymously
+                (async () => {
+                    try {
+                        if (initialAuthToken) {
+                            await signInWithCustomToken(auth, initialAuthToken);
+                        } else {
+                            await signInAnonymously(auth);
+                        }
+                        userId = auth.currentUser.uid;
+                        isAuthReady = true;
+                        console.log('Firebase initialized and user authenticated with ID:', userId);
+                    } catch (error) {
+                        console.error("Error initializing Firebase or authenticating:", error);
+                        showMessageBox('Could not connect to the database. Please refresh the page. (Error: ' + error.message + ')');
                     }
-                    userId = auth.currentUser.uid;
-                    isAuthReady = true;
-                    console.log('Firebase initialized and user authenticated with ID:', userId);
-                } catch (error) {
-                    console.error("Error initializing Firebase or authenticating:", error);
-                    showMessageBox('Could not connect to the database. Please refresh the page. (Error: ' + error.message + ')');
-                }
-            })();
-        } else {
-            console.error("Firebase config is missing. App cannot save data.");
-            showMessageBox('Firebase configuration not found. Application cannot run.');
-        }
-
-        const requirementsScreen = document.getElementById('requirements-screen');
-        const startApplicationBtn = document.getElementById('start-application-btn');
-        const applicationForm = document.getElementById('application-form');
-        const thankYouScreen = document.getElementById('thank-you-screen');
-        const formSteps = Array.from(document.querySelectorAll('.form-step:not(#application-form):not(#thank-you-screen)'));
-        const progressBar = document.getElementById('progress-bar');
-        const messageBox = document.getElementById('message-box');
-        const messageBoxOverlay = document.getElementById('message-box-overlay');
-        const messageBoxText = document.getElementById('message-box-text');
-        const messageBoxOkBtn = document.getElementById('message-box-ok-btn');
-        const questionsNextBtn = document.getElementById('questions-next-btn');
-
-        let currentStep = 0;
-        let currentQuestionIndex = 0;
-        let selectedRole = '';
-        const formAnswers = {}; // Object to store all form data, including question answers
-        
-        // Discord Webhook URL
-        const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1415590171394572369/VuKSQ2ovHfQKcKVGuSAk9lgSe1eGXcPwAJ6k1Zo9U4GLM1npy1YGnFCbY6i8B3M6Q422';
-
-        // Role-specific questions data
-        const roleQuestions = {
-            'Martins Albury CEO': [
-                "If you could change one thing about the company to make it better, what would it be and why?",
-                "How would you encourage your team members to work together?",
-                "A big event is happening in-game, and many new players are joining. How would you prepare the company?",
-                "How would you handle a situation where a lot of players are complaining on Discord about a recent update?",
-                "What are some key qualities a good leader should have?",
-                "How would you train a new manager for your team?",
-                "How do you plan to make our company stand out from others?",
-                "Describe a time you solved a problem on your own.",
-                "What is the most important rule for a CEO to follow?",
-                "How would you ensure all your team members feel heard and respected?",
-                "A player is being mean to a staff member. How would you respond?",
-                "How do you stay organized when you have a lot of tasks?",
-                "What motivates you to take on a leadership role?",
-                "If you had to create a new company rule, what would it be and why?",
-                "Why do you want to be the CEO of this division?"
-            ],
-            'Martins Manager': [
-                "How would you handle a conflict between two drivers on your team?",
-                "What is the most important skill for a manager to have?",
-                "A new driver is struggling with their first few shifts. How would you help them?",
-                "How would you make sure all drivers are following the safety rules?",
-                "What would you do if you saw a driver breaking a major rule?",
-                "How would you celebrate your team's achievements?",
-                "A player reports that a driver was being rude. How would you investigate and handle this?",
-                "What makes you a good team player?",
-                "How would you handle a situation where a player is spamming the chat?",
-                "What do you think is the biggest challenge a manager faces?",
-                "How would you communicate important announcements to your team?",
-                "How do you plan to be a positive role model for other drivers?",
-                "How do you stay calm when things get stressful?",
-                "Describe a time you had to teach someone something new.",
-                "Why do you want to be a manager for this division?"
-            ],
-            'Dysons CEO': [
-                "If you could change one thing about the company to make it better, what would it be and why?",
-                "How would you encourage your team members to work together?",
-                "A big event is happening in-game, and many new players are joining. How would you prepare the company?",
-                "How would you handle a situation where a lot of players are complaining on Discord about a recent update?",
-                "What are some key qualities a good leader should have?",
-                "How would you train a new manager for your team?",
-                "How do you plan to make our company stand out from others?",
-                "Describe a time you solved a problem on your own.",
-                "What is the most important rule for a CEO to follow?",
-                "How would you ensure all your team members feel heard and respected?",
-                "A player is being mean to a staff member. How would you respond?",
-                "How do you stay organized when you have a lot of tasks?",
-                "What motivates you to take on a leadership role?",
-                "If you had to create a new company rule, what would it be and why?",
-                "Why do you want to be the CEO of this division?"
-            ],
-            'Dysons Manager': [
-                "How would you handle a conflict between two drivers on your team?",
-                "What is the most important skill for a manager to have?",
-                "A new driver is struggling with their first few shifts. How would you help them?",
-                "How would you make sure all drivers are following the safety rules?",
-                "What would you do if you saw a driver breaking a major rule?",
-                "How would you celebrate your team's achievements?",
-                "A player reports that a driver was being rude. How would you investigate and handle this?",
-                "What makes you a good team player?",
-                "How would you handle a situation where a player is spamming the chat?",
-                "What do you think is the biggest challenge a manager faces?",
-                "How would you communicate important announcements to your team?",
-                "How do you plan to be a positive role model for other drivers?",
-                "How do you stay calm when things get stressful?",
-                "Describe a time you had to teach someone something new.",
-                "Why do you want to be a manager for this division?"
-            ],
-            'Martins Driver': [
-                "Why do you want to be a bus driver for us?",
-                "How would you handle a passenger who is being loud and disruptive?",
-                "What is the most important rule of the road in the game?",
-                "A passenger asks you for help, but you're in the middle of a route. What do you do?",
-                "How would you make a passenger's experience on your bus enjoyable?",
-                "What does it mean to be a responsible driver?",
-                "You see another driver making a mistake. How do you respond?",
-                "How would you handle a bus that has a minor issue, like a door not closing properly?",
-                "What is your approach to staying on top of bus route changes or new rules?",
-                "How would you assist a passenger who needs help with directions?",
-                "What is your experience with customer service?",
-                "How do you stay calm under pressure?",
-                "What steps would you take to correctly report a rule-breaking player or staff member?",
-                "How would you maintain the cleanliness of your bus?",
-                "What qualities do you think make a great bus driver?"
-            ],
-            'Dysons Driver': [
-                "Why do you want to be a bus driver for us?",
-                "How would you handle a passenger who is being loud and disruptive?",
-                "What is the most important rule of the road in the game?",
-                "A passenger asks you for help, but you're in the middle of a route. What do you do?",
-                "How would you make a passenger's experience on your bus enjoyable?",
-                "What does it mean to be a responsible driver?",
-                "You see another driver making a mistake. How do you respond?",
-                "How would you handle a bus that has a minor issue, like a door not closing properly?",
-                "What is your approach to staying on top of bus route changes or new rules?",
-                "How would you assist a passenger who needs help with directions?",
-                "What is your experience with customer service?",
-                "How do you stay calm under pressure?",
-                "What steps would you take to correctly report a rule-breaking player or staff member?",
-                "How would you maintain the cleanliness of your bus?",
-                "What qualities do you think make a great bus driver?"
-            ]
-        };
-
-        function showMessageBox(message) {
-            messageBoxText.textContent = message;
-            messageBox.classList.remove('hidden');
-            messageBoxOverlay.classList.remove('hidden');
-        }
-
-        function hideMessageBox() {
-            messageBox.classList.add('hidden');
-            messageBoxOverlay.classList.add('hidden');
-        }
-
-        messageBoxOkBtn.addEventListener('click', hideMessageBox);
-
-        function showStep(stepIndex) {
-            formSteps.forEach((step, index) => {
-                if (index === stepIndex) {
-                    step.classList.add('active');
-                } else {
-                    step.classList.remove('active');
-                }
-            });
-            updateProgressBar();
-            applicationForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-
-        function updateProgressBar() {
-            let totalSteps = formSteps.length;
-            let currentProgressPoint = currentStep + 1;
-            
-            // Adjust progress for role questions
-            if (currentStep === 4 && selectedRole && roleQuestions[selectedRole]) {
-                totalSteps = formSteps.length - 1 + roleQuestions[selectedRole].length;
-                currentProgressPoint = currentStep + currentQuestionIndex;
+                })();
+            } else {
+                console.error("Firebase config is missing. App cannot save data.");
+                showMessageBox('Firebase configuration not found. Application cannot run.');
             }
 
-            const progress = (currentProgressPoint / totalSteps) * 100;
-            progressBar.style.width = `${progress}%`;
-        }
+            const requirementsScreen = document.getElementById('requirements-screen');
+            const startApplicationBtn = document.getElementById('start-application-btn');
+            const applicationForm = document.getElementById('application-form');
+            const thankYouScreen = document.getElementById('thank-you-screen');
+            const formSteps = Array.from(document.querySelectorAll('.form-step:not(#application-form):not(#thank-you-screen)'));
+            const progressBar = document.getElementById('progress-bar');
+            const messageBox = document.getElementById('message-box');
+            const messageBoxOverlay = document.getElementById('message-box-overlay');
+            const messageBoxText = document.getElementById('message-box-text');
+            const messageBoxOkBtn = document.getElementById('message-box-ok-btn');
+            const questionsNextBtn = document.getElementById('questions-next-btn');
 
-        function validateStep(stepIndex) {
-            let isValid = true;
-            const currentStepElement = formSteps[stepIndex];
+            let currentStep = 0;
+            let currentQuestionIndex = 0;
+            let selectedRole = '';
+            const formAnswers = {}; // Object to store all form data, including question answers
             
-            if (stepIndex <= 2) { // Validate Roblox, Discord, and Age
-                const input = currentStepElement.querySelector('[required]');
-                if (!input.value.trim()) {
-                    isValid = false;
-                    input.style.borderColor = '#ef4444';
-                } else {
-                    input.style.borderColor = '#d1d5db';
+            // Discord Webhook URL
+            const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1415590171394572369/VuKSQ2ovHfQKcKVGuSAk9lgSe1eGXcPqAJ6k1Zo9U4GLM1npy1YGnFCbY6i8B3M6Q422';
+
+            // Role-specific questions data
+            const roleQuestions = {
+                'Martins Albury CEO': [
+                    "If you could change one thing about the company to make it better, what would it be and why?",
+                    "How would you encourage your team members to work together?",
+                    "A big event is happening in-game, and many new players are joining. How would you prepare the company?",
+                    "How would you handle a situation where a lot of players are complaining on Discord about a recent update?",
+                    "What are some key qualities a good leader should have?",
+                    "How would you train a new manager for your team?",
+                    "How do you plan to make our company stand out from others?",
+                    "Describe a time you solved a problem on your own.",
+                    "What is the most important rule for a CEO to follow?",
+                    "How would you ensure all your team members feel heard and respected?",
+                    "A player is being mean to a staff member. How would you respond?",
+                    "How do you stay organized when you have a lot of tasks?",
+                    "What motivates you to take on a leadership role?",
+                    "If you had to create a new company rule, what would it be and why?",
+                    "Why do you want to be the CEO of this division?"
+                ],
+                'Martins Manager': [
+                    "How would you handle a conflict between two drivers on your team?",
+                    "What is the most important skill for a manager to have?",
+                    "A new driver is struggling with their first few shifts. How would you help them?",
+                    "How would you make sure all drivers are following the safety rules?",
+                    "What would you do if you saw a driver breaking a major rule?",
+                    "How would you celebrate your team's achievements?",
+                    "A player reports that a driver was being rude. How would you investigate and handle this?",
+                    "What makes you a good team player?",
+                    "How would you handle a situation where a player is spamming the chat?",
+                    "What do you think is the biggest challenge a manager faces?",
+                    "How would you communicate important announcements to your team?",
+                    "How do you plan to be a positive role model for other drivers?",
+                    "How do you stay calm when things get stressful?",
+                    "Describe a time you had to teach someone something new.",
+                    "Why do you want to be a manager for this division?"
+                ],
+                'Dysons CEO': [
+                    "If you could change one thing about the company to make it better, what would it be and why?",
+                    "How would you encourage your team members to work together?",
+                    "A big event is happening in-game, and many new players are joining. How would you prepare the company?",
+                    "How would you handle a situation where a lot of players are complaining on Discord about a recent update?",
+                    "What are some key qualities a good leader should have?",
+                    "How would you train a new manager for your team?",
+                    "How do you plan to make our company stand out from others?",
+                    "Describe a time you solved a problem on your own.",
+                    "What is the most important rule for a CEO to follow?",
+                    "How would you ensure all your team members feel heard and respected?",
+                    "A player is being mean to a staff member. How would you respond?",
+                    "How do you stay organized when you have a lot of tasks?",
+                    "What motivates you to take on a leadership role?",
+                    "If you had to create a new company rule, what would it be and why?",
+                    "Why do you want to be the CEO of this division?"
+                ],
+                'Dysons Manager': [
+                    "How would you handle a conflict between two drivers on your team?",
+                    "What is the most important skill for a manager to have?",
+                    "A new driver is struggling with their first few shifts. How would you help them?",
+                    "How would you make sure all drivers are following the safety rules?",
+                    "What would you do if you saw a driver breaking a major rule?",
+                    "How would you celebrate your team's achievements?",
+                    "A player reports that a driver was being rude. How would you investigate and handle this?",
+                    "What makes you a good team player?",
+                    "How would you handle a situation where a player is spamming the chat?",
+                    "What do you think is the biggest challenge a manager faces?",
+                    "How would you communicate important announcements to your team?",
+                    "How do you plan to be a positive role model for other drivers?",
+                    "How do you stay calm when things get stressful?",
+                    "Describe a time you had to teach someone something new.",
+                    "Why do you want to be a manager for this division?"
+                ],
+                'Martins Driver': [
+                    "Why do you want to be a bus driver for us?",
+                    "How would you handle a passenger who is being loud and disruptive?",
+                    "What is the most important rule of the road in the game?",
+                    "A passenger asks you for help, but you're in the middle of a route. What do you do?",
+                    "How would you make a passenger's experience on your bus enjoyable?",
+                    "What does it mean to be a responsible driver?",
+                    "You see another driver making a mistake. How do you respond?",
+                    "How would you handle a bus that has a minor issue, like a door not closing properly?",
+                    "What is your approach to staying on top of bus route changes or new rules?",
+                    "How would you assist a passenger who needs help with directions?",
+                    "What is your experience with customer service?",
+                    "How do you stay calm under pressure?",
+                    "What steps would you take to correctly report a rule-breaking player or staff member?",
+                    "How would you maintain the cleanliness of your bus?",
+                    "What qualities do you think make a great bus driver?"
+                ],
+                'Dysons Driver': [
+                    "Why do you want to be a bus driver for us?",
+                    "How would you handle a passenger who is being loud and disruptive?",
+                    "What is the most important rule of the road in the game?",
+                    "A passenger asks you for help, but you're in the middle of a route. What do you do?",
+                    "How would you make a passenger's experience on your bus enjoyable?",
+                    "What does it mean to be a responsible driver?",
+                    "You see another driver making a mistake. How do you respond?",
+                    "How would you handle a bus that has a minor issue, like a door not closing properly?",
+                    "What is your approach to staying on top of bus route changes or new rules?",
+                    "How would you assist a passenger who needs help with directions?",
+                    "What is your experience with customer service?",
+                    "How do you stay calm under pressure?",
+                    "What steps would you take to correctly report a rule-breaking player or staff member?",
+                    "How would you maintain the cleanliness of your bus?",
+                    "What qualities do you think make a great bus driver?"
+                ]
+            };
+
+            function showMessageBox(message) {
+                messageBoxText.textContent = message;
+                messageBox.classList.remove('hidden');
+                messageBoxOverlay.classList.remove('hidden');
+            }
+
+            function hideMessageBox() {
+                messageBox.classList.add('hidden');
+                messageBoxOverlay.classList.add('hidden');
+            }
+
+            messageBoxOkBtn.addEventListener('click', hideMessageBox);
+
+            function showStep(stepIndex) {
+                formSteps.forEach((step, index) => {
+                    if (index === stepIndex) {
+                        step.classList.add('active');
+                    } else {
+                        step.classList.remove('active');
+                    }
+                });
+                updateProgressBar();
+                applicationForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            function updateProgressBar() {
+                let totalSteps = formSteps.length;
+                let currentProgressPoint = currentStep + 1;
+                
+                // Adjust progress for role questions
+                if (currentStep === 4 && selectedRole && roleQuestions[selectedRole]) {
+                    totalSteps = formSteps.length - 1 + roleQuestions[selectedRole].length;
+                    currentProgressPoint = currentStep + currentQuestionIndex;
                 }
 
-                if (stepIndex === 2) {
-                    const ageError = document.getElementById('age-error');
-                    if (parseInt(input.value) < 13) {
+                const progress = (currentProgressPoint / totalSteps) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+
+            function validateStep(stepIndex) {
+                let isValid = true;
+                const currentStepElement = formSteps[stepIndex];
+                
+                if (stepIndex <= 2) { // Validate Roblox, Discord, and Age
+                    const input = currentStepElement.querySelector('[required]');
+                    if (!input.value.trim()) {
                         isValid = false;
-                        ageError.classList.remove('hidden');
                         input.style.borderColor = '#ef4444';
                     } else {
-                        ageError.classList.add('hidden');
-                    }
-                }
-            } else if (stepIndex === 3) { // Validate Role Selection
-                const roleSelect = document.getElementById('role-select');
-                if (!roleSelect.value) {
-                    isValid = false;
-                    roleSelect.style.borderColor = '#ef4444';
-                } else {
-                    isValid = true;
-                    selectedRole = roleSelect.value;
-                    roleSelect.style.borderColor = '#d1d5db';
-                }
-            } else if (stepIndex === 4) { // Validate Questions
-                const currentQuestionInput = document.getElementById(`question-${currentQuestionIndex}`);
-                if (currentQuestionInput && !currentQuestionInput.value.trim()) {
-                    isValid = false;
-                    currentQuestionInput.style.borderColor = '#ef4444';
-                } else if (currentQuestionInput) {
-                    isValid = true;
-                    currentQuestionInput.style.borderColor = '#d1d5db';
-                }
-            } else if (stepIndex === 5) { // Validate Agreement
-                // Re-defining these variables here to ensure they are in scope
-                const agreementCheck = document.getElementById('agreement-check');
-                const agreementError = document.getElementById('agreement-error');
-                if (!agreementCheck.checked) {
-                    isValid = false;
-                    agreementError.classList.remove('hidden');
-                } else {
-                    isValid = true;
-                    agreementError.classList.add('hidden');
-                }
-            }
-            
-            return isValid;
-        }
-        
-        function showQuestion() {
-            const questionsContainer = document.getElementById('role-questions');
-            questionsContainer.innerHTML = ''; // Clear previous question
-            
-            if (roleQuestions[selectedRole] && currentQuestionIndex < roleQuestions[selectedRole].length) {
-                const question = roleQuestions[selectedRole][currentQuestionIndex];
-                const questionDiv = document.createElement('div');
-                questionDiv.classList.add('mb-4');
-                questionDiv.innerHTML = `
-                    <label for="question-${currentQuestionIndex}" class="label">${currentQuestionIndex + 1}. ${question}</label>
-                    <textarea id="question-${currentQuestionIndex}" name="question-${currentQuestionIndex}" required class="mb-4">${formAnswers[`question-${currentQuestionIndex}`] || ''}</textarea>
-                `;
-                questionsContainer.appendChild(questionDiv);
-                questionsNextBtn.classList.remove('hidden');
-            } else {
-                questionsNextBtn.classList.add('hidden');
-                currentStep++;
-                showStep(currentStep);
-            }
-            updateProgressBar();
-        }
-
-        // Event Listeners
-        startApplicationBtn.addEventListener('click', () => {
-            requirementsScreen.classList.add('hidden');
-            applicationForm.classList.add('active');
-            showStep(currentStep);
-        });
-
-        document.getElementById('role-select').addEventListener('change', (event) => {
-            selectedRole = event.target.value;
-        });
-
-        document.querySelectorAll('.next-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                if (validateStep(currentStep)) {
-                    // Save the current step's input before moving on
-                    const inputElement = formSteps[currentStep].querySelector('input, select, textarea');
-                    if (inputElement) {
-                        formAnswers[inputElement.name] = inputElement.value;
+                        input.style.borderColor = '#d1d5db';
                     }
 
-                    if (currentStep === 3) {
-                        currentQuestionIndex = 0;
-                        showStep(currentStep + 1);
-                        showQuestion();
-                    } else {
-                        currentStep++;
-                        if (currentStep < formSteps.length) {
-                            showStep(currentStep);
+                    if (stepIndex === 2) {
+                        const ageError = document.getElementById('age-error');
+                        if (parseInt(input.value) < 13) {
+                            isValid = false;
+                            ageError.classList.remove('hidden');
+                            input.style.borderColor = '#ef4444';
+                        } else {
+                            ageError.classList.add('hidden');
                         }
                     }
-                }
-            });
-        });
-
-        questionsNextBtn.addEventListener('click', () => {
-            if (validateStep(currentStep)) {
-                const currentQuestionInput = document.getElementById(`question-${currentQuestionIndex}`);
-                if (currentQuestionInput) {
-                    formAnswers[currentQuestionInput.name] = currentQuestionInput.value;
+                } else if (stepIndex === 3) { // Validate Role Selection
+                    const roleSelect = document.getElementById('role-select');
+                    if (!roleSelect.value) {
+                        isValid = false;
+                        roleSelect.style.borderColor = '#ef4444';
+                    } else {
+                        isValid = true;
+                        selectedRole = roleSelect.value;
+                        roleSelect.style.borderColor = '#d1d5db';
+                    }
+                } else if (stepIndex === 4) { // Validate Questions
+                    const currentQuestionInput = document.getElementById(`question-${currentQuestionIndex}`);
+                    if (currentQuestionInput && !currentQuestionInput.value.trim()) {
+                        isValid = false;
+                        currentQuestionInput.style.borderColor = '#ef4444';
+                    } else if (currentQuestionInput) {
+                        isValid = true;
+                        currentQuestionInput.style.borderColor = '#d1d5db';
+                    }
+                } else if (stepIndex === 5) { // Validate Agreement
+                    // Re-defining these variables here to ensure they are in scope
+                    const agreementCheck = document.getElementById('agreement-check');
+                    const agreementError = document.getElementById('agreement-error');
+                    if (!agreementCheck.checked) {
+                        isValid = false;
+                        agreementError.classList.remove('hidden');
+                    } else {
+                        isValid = true;
+                        agreementError.classList.add('hidden');
+                    }
                 }
                 
-                currentQuestionIndex++;
-                if (currentQuestionIndex < roleQuestions[selectedRole].length) {
-                    showQuestion();
+                return isValid;
+            }
+            
+            function showQuestion() {
+                const questionsContainer = document.getElementById('role-questions');
+                questionsContainer.innerHTML = ''; // Clear previous question
+                
+                if (roleQuestions[selectedRole] && currentQuestionIndex < roleQuestions[selectedRole].length) {
+                    const question = roleQuestions[selectedRole][currentQuestionIndex];
+                    const questionDiv = document.createElement('div');
+                    questionDiv.classList.add('mb-4');
+                    questionDiv.innerHTML = `
+                        <label for="question-${currentQuestionIndex}" class="label">${currentQuestionIndex + 1}. ${question}</label>
+                        <textarea id="question-${currentQuestionIndex}" name="question-${currentQuestionIndex}" required class="mb-4">${formAnswers[`question-${currentQuestionIndex}`] || ''}</textarea>
+                    `;
+                    questionsContainer.appendChild(questionDiv);
+                    questionsNextBtn.classList.remove('hidden');
                 } else {
+                    questionsNextBtn.classList.add('hidden');
                     currentStep++;
                     showStep(currentStep);
                 }
+                updateProgressBar();
             }
-        });
 
-        document.querySelectorAll('.prev-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                if (currentStep === 5) { // From agreement screen to last question
-                    currentStep--;
-                    currentQuestionIndex = roleQuestions[selectedRole].length - 1;
-                    showStep(currentStep);
-                    showQuestion();
-                } else if (currentStep === 4) { // From a question to the previous
-                    currentQuestionIndex--;
-                    if (currentQuestionIndex < 0) {
-                        currentStep--;
-                        showStep(currentStep);
-                    } else {
-                        showQuestion();
-                    }
-                } else {
-                    currentStep--;
-                    if (currentStep >= 0) {
+            // Event Listeners
+            startApplicationBtn.addEventListener('click', () => {
+                requirementsScreen.classList.add('hidden');
+                applicationForm.classList.add('active');
+                showStep(currentStep);
+            });
+
+            document.getElementById('role-select').addEventListener('change', (event) => {
+                selectedRole = event.target.value;
+            });
+
+            document.querySelectorAll('.next-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    if (validateStep(currentStep)) {
+                        // Save the current step's input before moving on
                         const inputElement = formSteps[currentStep].querySelector('input, select, textarea');
                         if (inputElement) {
-                            inputElement.value = formAnswers[inputElement.name] || '';
+                            formAnswers[inputElement.name] = inputElement.value;
                         }
+
+                        if (currentStep === 3) {
+                            currentQuestionIndex = 0;
+                            showStep(currentStep + 1);
+                            showQuestion();
+                        } else {
+                            currentStep++;
+                            if (currentStep < formSteps.length) {
+                                showStep(currentStep);
+                            }
+                        }
+                    }
+                });
+            });
+
+            questionsNextBtn.addEventListener('click', () => {
+                if (validateStep(currentStep)) {
+                    const currentQuestionInput = document.getElementById(`question-${currentQuestionIndex}`);
+                    if (currentQuestionInput) {
+                        formAnswers[currentQuestionInput.name] = currentQuestionInput.value;
+                    }
+                    
+                    currentQuestionIndex++;
+                    if (currentQuestionIndex < roleQuestions[selectedRole].length) {
+                        showQuestion();
+                    } else {
+                        currentStep++;
                         showStep(currentStep);
                     }
                 }
             });
-        });
 
-        document.getElementById('application-form').addEventListener('submit', async (event) => {
-            event.preventDefault();
-
-            if (!isAuthReady) {
-                showMessageBox('Database connection is not ready. Please try again in a moment.');
-                return;
-            }
-
-            // Define agreement variables locally to avoid reference errors
-            const agreementCheck = document.getElementById('agreement-check');
-            if (agreementCheck && !agreementCheck.checked) {
-                showMessageBox('You must agree to the terms to submit your application.');
-                return;
-            }
-
-            if (validateStep(currentStep)) {
-                const formData = new FormData(event.target);
-                const data = {};
-                for (let [key, value] of formData.entries()) {
-                    data[key] = value;
-                }
-                
-                // Combine form data with dynamically collected question answers
-                const finalData = { ...data, ...formAnswers };
-                
-                let discordMessageContent = `New Application Received for **${finalData.role}**!\n\n`;
-                discordMessageContent += `**Roblox Username:** ${finalData.robloxUsername}\n`;
-                discordMessageContent += `**Discord Username:** ${finalData.discordUsername}\n`;
-                discordMessageContent += `**Age:** ${finalData.age}\n\n`;
-                
-                const questionsList = roleQuestions[finalData.role];
-                if (questionsList) {
-                    discordMessageContent += `**Role-Specific Questions:**\n`;
-                    questionsList.forEach((question, index) => {
-                        const answerKey = `question-${index}`;
-                        discordMessageContent += `  - **${question}**\n`;
-                        discordMessageContent += `    - ${finalData[answerKey] || 'No answer provided'}\n`;
-                    });
-                    discordMessageContent += "\n";
-                }
-
-                // Save to Firestore
-                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'applications', userId);
-                try {
-                    await setDoc(docRef, finalData);
-                    console.log("Application saved to Firestore with ID:", userId);
-
-                    // Send to Discord Webhook
-                    const response = await fetch(DISCORD_WEBHOOK_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ content: discordMessageContent }),
-                    });
-
-                    if (response.ok) {
-                        console.log('Application successfully sent to Discord!');
-                        applicationForm.classList.remove('active');
-                        applicationForm.classList.add('form-step');
-                        thankYouScreen.classList.add('active');
+            document.querySelectorAll('.prev-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    if (currentStep === 5) { // From agreement screen to last question
+                        currentStep--;
+                        currentQuestionIndex = roleQuestions[selectedRole].length - 1;
+                        showStep(currentStep);
+                        showQuestion();
+                    } else if (currentStep === 4) { // From a question to the previous
+                        currentQuestionIndex--;
+                        if (currentQuestionIndex < 0) {
+                            currentStep--;
+                            showStep(currentStep);
+                        } else {
+                            showQuestion();
+                        }
                     } else {
-                        console.error('Failed to send application to Discord:', response.status, response.statusText);
-                        showMessageBox('Failed to submit application. Please try again later. (Error: ' + response.status + ')');
+                        currentStep--;
+                        if (currentStep >= 0) {
+                            const inputElement = formSteps[currentStep].querySelector('input, select, textarea');
+                            if (inputElement) {
+                                inputElement.value = formAnswers[inputElement.name] || '';
+                            }
+                            showStep(currentStep);
+                        }
                     }
-                } catch (error) {
-                    console.error('Error submitting application:', error);
-                    showMessageBox('An error occurred while submitting your application. Please try again.');
-                }
-            }
-        });
+                });
+            });
 
-        applicationForm.classList.add('form-step');
-        thankYouScreen.classList.add('form-step');
-        requirementsScreen.classList.remove('hidden');
+            document.getElementById('application-form').addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                if (!isAuthReady) {
+                    showMessageBox('Database connection is not ready. Please try again in a moment.');
+                    return;
+                }
+
+                // Define agreement variables locally to avoid reference errors
+                const agreementCheck = document.getElementById('agreement-check');
+                if (agreementCheck && !agreementCheck.checked) {
+                    showMessageBox('You must agree to the terms to submit your application.');
+                    return;
+                }
+
+                if (validateStep(currentStep)) {
+                    const formData = new FormData(event.target);
+                    const data = {};
+                    for (let [key, value] of formData.entries()) {
+                        data[key] = value;
+                    }
+                    
+                    // Combine form data with dynamically collected question answers
+                    const finalData = { ...data, ...formAnswers };
+                    
+                    let discordMessageContent = `New Application Received for **${finalData.role}**!\n\n`;
+                    discordMessageContent += `**Roblox Username:** ${finalData.robloxUsername}\n`;
+                    discordMessageContent += `**Discord Username:** ${finalData.discordUsername}\n`;
+                    discordMessageContent += `**Age:** ${finalData.age}\n\n`;
+                    
+                    const questionsList = roleQuestions[finalData.role];
+                    if (questionsList) {
+                        discordMessageContent += `**Role-Specific Questions:**\n`;
+                        questionsList.forEach((question, index) => {
+                            const answerKey = `question-${index}`;
+                            discordMessageContent += `  - **${question}**\n`;
+                            discordMessageContent += `    - ${finalData[answerKey] || 'No answer provided'}\n`;
+                        });
+                        discordMessageContent += "\n";
+                    }
+
+                    // Save to Firestore
+                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'applications', userId);
+                    try {
+                        await setDoc(docRef, finalData);
+                        console.log("Application saved to Firestore with ID:", userId);
+
+                        // Send to Discord Webhook
+                        const response = await fetch(DISCORD_WEBHOOK_URL, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ content: discordMessageContent }),
+                        });
+
+                        if (response.ok) {
+                            console.log('Application successfully sent to Discord!');
+                            applicationForm.classList.remove('active');
+                            applicationForm.classList.add('form-step');
+                            thankYouScreen.classList.add('active');
+                        } else {
+                            console.error('Failed to send application to Discord:', response.status, response.statusText);
+                            showMessageBox('Failed to submit application. Please try again later. (Error: ' + response.status + ')');
+                        }
+                    } catch (error) {
+                        console.error('Error submitting application:', error);
+                        showMessageBox('An error occurred while submitting your application. Please try again.');
+                    }
+                }
+            });
+
+            applicationForm.classList.add('form-step');
+            thankYouScreen.classList.add('form-step');
+            requirementsScreen.classList.remove('hidden');
+
+        }); // End of DOMContentLoaded listener
     </script>
 </body>
 </html>
