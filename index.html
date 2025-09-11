@@ -3,672 +3,553 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Albury and Wodonga Transport Staff Application</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts - Inter -->
+    <title>PTV Staff Application</title>
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f2f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 1rem;
-        }
-        .container {
-            background-color: #ffffff;
-            border-radius: 1.5rem;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            max-width: 800px;
-            width: 100%;
-            padding: 2.5rem;
-            transition: all 0.3s ease-in-out;
-        }
-        .form-step {
-            display: none;
-        }
-        .form-step.active {
-            display: block;
-        }
-        .btn-primary {
-            background-color: #4f46e5;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.75rem;
-            font-weight: 600;
-            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
-        }
-        .btn-primary:hover {
-            background-color: #4338ca;
-            transform: translateY(-1px);
-        }
-        .btn-primary:active {
-            transform: translateY(0);
-        }
-        .btn-secondary {
-            background-color: #e0e7ff;
-            color: #4f46e5;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.75rem;
-            font-weight: 600;
-            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
-        }
-        .btn-secondary:hover {
-            background-color: #c7d2fe;
-            transform: translateY(-1px);
-        }
-        .btn-secondary:active {
-            transform: translateY(0);
-        }
-        input[type="text"],
-        input[type="number"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #d1d5db;
-            border-radius: 0.5rem;
-            font-size: 1rem;
-            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        }
-        input[type="text"]:focus,
-        input[type="number"]:focus,
-        textarea:focus,
-        select:focus {
-            outline: none;
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
-        }
-        textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-        .label {
-            display: block;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            color: #374151;
-        }
-        .error-message {
-            color: #ef4444;
-            font-size: 0.875rem;
-            margin-top: 0.25rem;
-        }
-        .message-box {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 2rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            z-index: 1000;
-            text-align: center;
-            max-width: 400px;
-            width: 90%;
-            border: 1px solid #d1d5db;
-        }
-        .message-box-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
+            background-color: #f0fdf4; /* Very light green background */
+            color: #1f2937;
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <!-- Requirements Screen -->
-        <div id="requirements-screen" class="text-center">
-            <h1 class="text-3xl font-bold text-gray-900 mb-6">Albury and Wodonga Transport</h1>
-            <h2 class="text-2xl font-semibold text-gray-800 mb-8">Application Requirements</h2>
-            <ul class="list-disc list-inside text-left text-lg text-gray-700 space-y-3 mb-10 max-w-md mx-auto">
+<body class="p-4 md:p-8 flex items-center justify-center min-h-screen">
+
+    <div class="max-w-4xl w-full mx-auto bg-white p-6 md:p-10 rounded-3xl shadow-2xl border border-green-100">
+
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-green-800 mb-2 drop-shadow-sm">Public Transport Victoria</h1>
+            <h2 class="text-2xl font-bold text-green-600 mb-4 drop-shadow-sm">Staff Application</h2>
+            <p class="text-lg text-gray-600">Please fill out the form below to apply for a staff position.</p>
+        </header>
+
+        <!-- Rules and Requirements -->
+        <section class="mb-8 p-6 bg-yellow-50 rounded-lg border-l-4 border-yellow-400 text-yellow-800 shadow-inner">
+            <h2 class="text-xl font-semibold mb-2">Important Requirements</h2>
+            <ul class="list-disc list-inside space-y-2 text-yellow-900">
                 <li>You must be at least 13 years of age.</li>
                 <li>You must be a member of our official Discord server.</li>
-                <li>You must be a member of our Roblox group **Public Transport Victoria (PTV)**.</li>
+                <li>You must be a member of our Roblox group <strong class="text-blue-600">Public Transport Victoria (PTV)</strong>.</li>
                 <li>Any use of AI to generate responses will result in an automatic disqualification.</li>
             </ul>
-            <button id="start-application-btn" class="btn-primary">Start Application</button>
-        </div>
+        </section>
 
-        <!-- Application Form -->
-        <form id="application-form" class="form-step">
-            <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Application Form</h2>
-            <div id="form-steps-container">
-                <!-- Step 1: Roblox Username -->
-                <div id="step-1" class="form-step active">
-                    <label for="roblox-username" class="label">Your Roblox Username:</label>
-                    <input type="text" id="roblox-username" name="robloxUsername" required class="mb-4">
-                    <div class="flex justify-end">
-                        <button type="button" class="btn-primary next-btn">Next</button>
-                    </div>
+        <!-- Application Form Container -->
+        <form id="applicationForm" class="space-y-6" onsubmit="handleSubmit(event)">
+
+            <!-- Page 1 – Info -->
+            <div id="page1" class="page space-y-4">
+                <h3 class="text-xl font-bold text-green-700">Page 1 – Info</h3>
+                <div class="w-full">
+                    <label for="robloxUsername" class="block text-sm font-medium text-green-700">Roblox Username</label>
+                    <input type="text" id="robloxUsername" name="robloxUsername" required class="mt-1 block w-full px-4 py-2 bg-green-50 border-2 border-green-200 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm transition duration-200">
                 </div>
-
-                <!-- Step 2: Discord Username -->
-                <div id="step-2" class="form-step">
-                    <label for="discord-username" class="label">Your Discord Username:</label>
-                    <input type="text" id="discord-username" name="discordUsername" required class="mb-4">
-                    <div class="flex justify-between">
-                        <button type="button" class="btn-secondary prev-btn">Previous</button>
-                        <button type="button" class="btn-primary next-btn">Next</button>
-                    </div>
+                <div class="w-full">
+                    <label for="discordUsername" class="block text-sm font-medium text-green-700">Discord Username</label>
+                    <input type="text" id="discordUsername" name="discordUsername" required class="mt-1 block w-full px-4 py-2 bg-green-50 border-2 border-green-200 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm transition duration-200">
                 </div>
-
-                <!-- Step 3: Age -->
-                <div id="step-3" class="form-step">
-                    <label for="age" class="label">Your Age:</label>
-                    <input type="number" id="age" name="age" min="13" required class="mb-4">
-                    <p id="age-error" class="error-message hidden">You must be at least 13 years old.</p>
-                    <div class="flex justify-between">
-                        <button type="button" class="btn-secondary prev-btn">Previous</button>
-                        <button type="button" class="btn-primary next-btn">Next</button>
-                    </div>
-                </div>
-
-                <!-- Step 4: Role Selection -->
-                <div id="step-4" class="form-step">
-                    <label for="role-select" class="label">What role are you looking for?</label>
-                    <select id="role-select" name="role" required class="mb-4">
-                        <option value="">Select a role</option>
-                        <option value="Martins Albury CEO">🟨 Martins Albury CEO</option>
-                        <option value="Martins Manager">🟨 Martins Manager</option>
-                        <option value="Dysons CEO">🟩 Dysons CEO</option>
-                        <option value="Dysons Manager">🟩 Dysons Manager</option>
-                        <option value="Martins Driver">🚌 Martins Driver</option>
-                        <option value="Dysons Driver">🚌 Dysons Driver</option>
-                    </select>
-                    <div class="flex justify-between">
-                        <button type="button" class="btn-secondary prev-btn">Previous</button>
-                        <button type="button" class="btn-primary next-btn">Next</button>
-                    </div>
-                </div>
-
-                <!-- Step 5: Role-specific Questions -->
-                <div id="step-5" class="form-step">
-                    <div id="role-questions">
-                        <!-- Questions will be dynamically inserted here -->
-                    </div>
-                    <div class="flex justify-between mt-4">
-                        <button type="button" class="btn-secondary prev-btn">Previous</button>
-                        <button type="button" id="questions-next-btn" class="btn-primary">Next</button>
-                    </div>
-                </div>
-
-                <!-- Step 6: Agreement Checkbox -->
-                <div id="step-6" class="form-step text-center">
-                    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Confirm Your Agreement</h2>
-                    <div id="agreement-checkbox" class="mb-4">
-                        <label class="flex items-center justify-center">
-                            <input type="checkbox" id="agreement-check" name="agreement" required class="form-checkbox h-5 w-5 text-indigo-600 rounded-md">
-                            <span class="ml-2 text-lg text-gray-700">By checking this box, I confirm I have joined the Roblox group and Discord server.</span>
-                        </label>
-                        <p id="agreement-error" class="error-message hidden">You must agree to the terms to submit your application.</p>
-                    </div>
-                    <div class="flex justify-between mt-4">
-                        <button type="button" class="btn-secondary prev-btn">Previous</button>
-                        <button type="submit" id="questions-submit-btn" class="btn-primary">Submit Application</button>
-                    </div>
+                <div class="flex justify-end pt-4">
+                    <button type="button" onclick="nextPage()" class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition duration-300">Next</button>
                 </div>
             </div>
-            <!-- Progress Bar -->
-            <div class="w-full bg-gray-200 rounded-full h-2.5 mt-8">
-                <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full" style="width: 0%;"></div>
+
+            <!-- Page 2 – Job Selection -->
+            <div id="page2" class="page hidden space-y-4">
+                <h3 class="text-xl font-bold text-green-700">Page 2 – Job Selection</h3>
+                <div class="w-full">
+                    <label for="role" class="block text-sm font-medium text-green-700">Role you want</label>
+                    <select id="role" name="role" required class="mt-1 block w-full px-4 py-2 bg-green-50 border-2 border-green-200 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm transition duration-200">
+                        <option value="">-- Select a role --</option>
+                        <option value="Martins Albury CEO">🟨 Martins Albury CEO</option>
+                        <option value="Martins Manager">🟨 Martins Manager</option>
+                        <option value="Martins Driver">🚌 Martins Driver</option>
+                        <option value="Dysons CEO">🟩 Dysons CEO</option>
+                        <option value="Dysons Manager">🟩 Dysons Manager</option>
+                        <option value="Dysons Driver">🚌 Dysons Driver</option>
+                    </select>
+                </div>
+                <div class="flex justify-between pt-4">
+                    <button type="button" onclick="previousPage()" class="px-6 py-2 bg-gray-400 hover:bg-gray-500 text-white font-bold rounded-lg transition duration-300">Previous</button>
+                    <button type="button" onclick="nextPage()" class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition duration-300">Next</button>
+                </div>
+            </div>
+
+            <!-- Page 3 – Experience (Dynamic) -->
+            <div id="page3" class="page hidden space-y-4">
+                <h3 class="text-xl font-bold text-green-700">Page 3 – Experience</h3>
+                <div id="experienceQuestionsContainer" class="space-y-6"></div>
+                <div class="flex justify-between pt-4">
+                    <button type="button" onclick="previousPage()" class="px-6 py-2 bg-gray-400 hover:bg-gray-500 text-white font-bold rounded-lg transition duration-300">Previous</button>
+                    <button type="button" onclick="nextPage()" class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition duration-300">Next</button>
+                </div>
+            </div>
+
+            <!-- Page 4 – Availability -->
+            <div id="page4" class="page hidden space-y-4">
+                <h3 class="text-xl font-bold text-green-700">Page 4 – Availability</h3>
+                <div class="w-full">
+                    <label for="availabilityHours" class="block text-sm font-medium text-green-700">How many hours per week can you dedicate to this role?</label>
+                    <input type="number" id="availabilityHours" name="availabilityHours" required class="mt-1 block w-full px-4 py-2 bg-green-50 border-2 border-green-200 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm transition duration-200">
+                </div>
+                <div class="w-full">
+                    <label for="availabilityDays" class="block text-sm font-medium text-green-700">What days of the week are you most active?</label>
+                    <textarea id="availabilityDays" name="availabilityDays" rows="3" required class="mt-1 block w-full px-4 py-2 bg-green-50 border-2 border-green-200 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm transition duration-200"></textarea>
+                </div>
+                <div class="w-full">
+                    <label for="timezone" class="block text-sm font-medium text-green-700">What time zone are you in?</label>
+                    <input type="text" id="timezone" name="timezone" required class="mt-1 block w-full px-4 py-2 bg-green-50 border-2 border-green-200 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm transition duration-200"></textarea>
+                </div>
+                <div class="flex justify-between pt-4">
+                    <button type="button" onclick="previousPage()" class="px-6 py-2 bg-gray-400 hover:bg-gray-500 text-white font-bold rounded-lg transition duration-300">Previous</button>
+                    <button type="button" onclick="nextPage()" class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition duration-300">Next</button>
+                </div>
+            </div>
+
+            <!-- Page 5 – General Questions -->
+            <div id="page5" class="page hidden space-y-4">
+                <h3 class="text-xl font-bold text-green-700">Page 5 – General Questions</h3>
+                <div class="w-full">
+                    <label for="howFound" class="block text-sm font-medium text-green-700">How did you find out about our group?</label>
+                    <textarea id="howFound" name="howFound" rows="2" required class="mt-1 block w-full px-4 py-2 bg-green-50 border-2 border-green-200 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm transition duration-200"></textarea>
+                </div>
+                <div class="w-full">
+                    <label for="pastExperience" class="block text-sm font-medium text-green-700">Have you ever been a staff member in a similar Roblox group? If so, which one?</label>
+                    <textarea id="pastExperience" name="pastExperience" rows="3" required class="mt-1 block w-full px-4 py-2 bg-green-50 border-2 border-green-200 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm transition duration-200"></textarea>
+                </div>
+                <div class="w-full">
+                    <label for="passion" class="block text-sm font-medium text-green-700">Why are you passionate about public transport?</label>
+                    <textarea id="passion" name="passion" rows="3" required class="mt-1 block w-full px-4 py-2 bg-green-50 border-2 border-green-200 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm transition duration-200"></textarea>
+                </div>
+                <div class="flex justify-between pt-4">
+                    <button type="button" onclick="previousPage()" class="px-6 py-2 bg-gray-400 hover:bg-gray-500 text-white font-bold rounded-lg transition duration-300">Previous</button>
+                    <button type="button" onclick="nextPage()" class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition duration-300">Next</button>
+                </div>
+            </div>
+
+            <!-- Page 6 – Review -->
+            <div id="page6" class="page hidden space-y-4">
+                <h3 class="text-xl font-bold text-green-700">Page 6 – Review</h3>
+                <p>Please review your answers before submitting.</p>
+                <div id="reviewContent" data-editing="false" class="space-y-4 p-4 bg-green-50 rounded-lg"></div>
+                <div class="flex justify-between pt-4">
+                    <button type="button" onclick="previousPage()" class="px-6 py-2 bg-gray-400 hover:bg-gray-500 text-white font-bold rounded-lg transition duration-300">Previous</button>
+                    <div class="flex space-x-2">
+                        <button type="button" id="editButton" onclick="toggleEditReview()" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition duration-300">Edit</button>
+                        <button type="submit" class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition duration-300">Submit Final Application</button>
+                    </div>
+                </div>
             </div>
         </form>
 
-        <!-- Thank You Screen -->
-        <div id="thank-you-screen" class="form-step text-center">
-            <h2 class="text-3xl font-bold text-gray-900 mb-6">Thank You for Your Application!</h2>
-            <p class="text-lg text-gray-700 mb-8">Your application has been submitted successfully. We will review it and get back to you shortly.</p>
-            <p class="text-md text-gray-600">Please keep an eye on our Discord server for updates.</p>
-        </div>
-
-        <!-- Message Box for alerts -->
-        <div id="message-box-overlay" class="message-box-overlay hidden"></div>
-        <div id="message-box" class="message-box hidden">
-            <p id="message-box-text" class="text-lg text-gray-800 mb-6"></p>
-            <button id="message-box-ok-btn" class="btn-primary">OK</button>
+        <!-- Submission Summary (Initially hidden) -->
+        <div id="summaryContainer" class="hidden mt-8 p-6 bg-green-50 rounded-lg border-l-4 border-green-500 text-green-800 shadow-inner">
+            <h2 id="summaryHeader" class="text-xl font-semibold mb-2"></h2>
+            <p id="summaryText" class="mb-4"></p>
+            <div id="summaryContent" class="space-y-2 text-sm text-green-700"></div>
         </div>
     </div>
 
-    <!-- Firebase SDK Imports -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    <script>
+        let currentPage = 1;
+        const totalPages = 6;
+        let originalFormValues = {};
+        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1415590171394572369/VuKSQ2ovHfQKcKVGuSAk9lgSe1eGXcPwAJ6k1Zo9U4GLM1npy1YGnFCbY6i8B3M6Q422';
+
+        const questions = {
+            'CEO': [
+                "What is your most valuable leadership quality and how would you apply it as CEO?",
+                "Describe your experience managing a team or a large project.",
+                "How would you respond to negative feedback from the community?",
+                "What new ideas or features would you introduce to the group?",
+                "How would you handle a situation where a high-ranking staff member is not meeting expectations?"
+            ],
+            'Manager': [
+                "How do you stay organized and keep track of multiple tasks?",
+                "Describe your approach to training new staff members.",
+                "How would you de-escalate a tense situation between two staff members?",
+                "What are your top three priorities for a successful team?",
+                "How would you ensure all your staff are aware of new rules or updates?"
+            ],
+            'Driver': [
+                "What does safe and professional driving mean to you in a Roblox game?",
+                "How would you handle a passenger who is spamming the chat or being rude?",
+                "Why do you think it's important to follow a bus route accurately?",
+                "What makes you stand out from other applicants who want to be a driver?",
+                "How would you handle a technical issue with your bus, such as a glitch or a bug?"
+            ]
+        };
+        const formFieldMap = {
+            'robloxUsername': 'Roblox Username',
+            'discordUsername': 'Discord Username',
+            'role': 'Applied Role',
+            'availabilityHours': 'Availability Hours',
+            'availabilityDays': 'Availability Days',
+            'timezone': 'Time Zone',
+            'howFound': 'How Found',
+            'pastExperience': 'Past Experience',
+            'passion': 'Passion'
+        };
         
-        // This is a failsafe to ensure the code runs after everything is loaded.
-        window.onload = function() {
+        // This function saves data from the visible form fields into the central data object.
+        function saveCurrentPageData() {
+            const form = document.getElementById('applicationForm');
+            const formData = new FormData(form);
+            for (const [key, value] of formData.entries()) {
+                originalFormValues[key] = value;
+            }
+        }
+
+        // This function loads data from the central data object into the form fields.
+        function loadPageData(pageNumber) {
+            const form = document.getElementById('applicationForm');
+            const pageDiv = document.getElementById(`page${pageNumber}`);
+            const fields = pageDiv.querySelectorAll('input, textarea, select');
             
-            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-            const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-            const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-            
-            let db, auth, userId;
-            let isAuthReady = false;
-            
-            if (firebaseConfig) {
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-                
-                (async () => {
-                    try {
-                        if (initialAuthToken) {
-                            await signInWithCustomToken(auth, initialAuthToken);
-                        } else {
-                            await signInAnonymously(auth);
-                        }
-                        userId = auth.currentUser.uid;
-                        isAuthReady = true;
-                        console.log('Firebase initialized and user authenticated with ID:', userId);
-                    } catch (error) {
-                        console.error("Error initializing Firebase or authenticating:", error);
-                        showMessageBox('Could not connect to the database. Please refresh the page. (Error: ' + error.message + ')');
+            fields.forEach(field => {
+                if (originalFormValues[field.name] !== undefined) {
+                    field.value = originalFormValues[field.name];
+                }
+            });
+
+            if (pageNumber === 3) {
+                loadExperienceQuestions();
+            }
+        }
+
+        function showPage(pageNumber) {
+            document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
+            document.getElementById(`page${pageNumber}`).classList.remove('hidden');
+        }
+
+        function validateCurrentPage() {
+            const currentForm = document.getElementById(`page${currentPage}`);
+            const requiredFields = currentForm.querySelectorAll('[required]');
+            for (const field of requiredFields) {
+                if (!field.value) {
+                    field.classList.add('border-red-500');
+                    return false;
+                }
+                field.classList.remove('border-red-500');
+            }
+            return true;
+        }
+
+        function loadExperienceQuestions() {
+            const selectedRole = originalFormValues['role'];
+            const container = document.getElementById('experienceQuestionsContainer');
+            container.innerHTML = '';
+
+            let roleType = '';
+            if (selectedRole.includes('CEO')) {
+                roleType = 'CEO';
+            } else if (selectedRole.includes('Manager')) {
+                roleType = 'Manager';
+            } else if (selectedRole.includes('Driver')) {
+                roleType = 'Driver';
+            }
+
+            if (questions[roleType]) {
+                questions[roleType].forEach((question, index) => {
+                    const questionGroup = document.createElement('div');
+                    questionGroup.classList.add('space-y-2');
+
+                    const label = document.createElement('label');
+                    label.htmlFor = `q_exp_${index}`;
+                    label.textContent = question;
+                    label.classList.add('block', 'text-sm', 'font-medium', 'text-green-700');
+
+                    const textarea = document.createElement('textarea');
+                    textarea.id = `q_exp_${index}`;
+                    textarea.name = `experience_answer_${index}`;
+                    textarea.rows = 4;
+                    textarea.required = true;
+                    textarea.classList.add('mt-1', 'block', 'w-full', 'px-4', 'py-2', 'bg-green-50', 'border-2', 'border-green-200', 'rounded-md', 'shadow-sm', 'focus:ring-green-500', 'focus:border-green-500', 'sm:text-sm', 'transition', 'duration-200');
+                    
+                    const savedValue = originalFormValues[`experience_answer_${index}`];
+                    if(savedValue !== undefined) {
+                        textarea.value = savedValue;
                     }
-                })();
+
+                    questionGroup.appendChild(label);
+                    questionGroup.appendChild(textarea);
+                    container.appendChild(questionGroup);
+                });
+            }
+        }
+
+        function populateReviewPage() {
+            const reviewContent = document.getElementById('reviewContent');
+            reviewContent.innerHTML = '';
+
+            // Main form fields
+            for (const [key, value] of Object.entries(formFieldMap)) {
+                const p = document.createElement('p');
+                p.innerHTML = `<span class="font-semibold">${value}:</span> ${originalFormValues[key] || 'Not provided'}`;
+                reviewContent.appendChild(p);
+            }
+
+            // Experience questions
+            const role = originalFormValues['role'];
+            let roleType = '';
+            if (role.includes('CEO')) roleType = 'CEO';
+            else if (role.includes('Manager')) roleType = 'Manager';
+            else if (role.includes('Driver')) roleType = 'Driver';
+
+            const expQuestions = questions[roleType];
+            if (expQuestions) {
+                const h4 = document.createElement('h4');
+                h4.innerHTML = `<br><span class="font-bold underline">Experience Questions for ${roleType}:</span>`;
+                reviewContent.appendChild(h4);
+
+                expQuestions.forEach((q, index) => {
+                    const ans = originalFormValues[`experience_answer_${index}`] || 'Not provided';
+                    const p = document.createElement('p');
+                    p.innerHTML = `<span class="font-semibold">${q}</span><br>${ans}`;
+                    reviewContent.appendChild(p);
+                });
+            }
+        }
+
+        function applyReviewEdits() {
+            const editableInputs = document.querySelectorAll('#reviewContent input, #reviewContent textarea, #reviewContent select');
+            editableInputs.forEach(input => {
+                originalFormValues[input.name] = input.value;
+            });
+        }
+
+        function toggleEditReview() {
+            const reviewContent = document.getElementById('reviewContent');
+            const editButton = document.getElementById('editButton');
+            const isEditing = reviewContent.getAttribute('data-editing') === 'true';
+
+            if (isEditing) {
+                // Save and display
+                if (!validateEditableFields()) {
+                    return;
+                }
+                applyReviewEdits();
+                populateReviewPage();
+                editButton.textContent = 'Edit';
+                reviewContent.setAttribute('data-editing', 'false');
             } else {
-                console.error("Firebase config is missing. App cannot save data.");
-                showMessageBox('Firebase configuration not found. Application cannot run.');
+                // Edit mode
+                reviewContent.innerHTML = '';
+                
+                const createInput = (name, type, labelText, rows = null) => {
+                    const div = document.createElement('div');
+                    div.classList.add('space-y-2');
+                    const label = document.createElement('label');
+                    label.textContent = labelText;
+                    label.classList.add('block', 'text-sm', 'font-medium', 'text-green-700');
+                    div.appendChild(label);
+                    let input;
+                    if (type === 'textarea') {
+                        input = document.createElement('textarea');
+                        input.rows = rows;
+                    } else if (type === 'select') {
+                        input = document.createElement('select');
+                        const originalSelect = document.getElementById(name);
+                        if (originalSelect) {
+                            for(const option of originalSelect.options) {
+                                const opt = document.createElement('option');
+                                opt.value = option.value;
+                                opt.text = option.text;
+                                input.appendChild(opt);
+                            }
+                        }
+                    } else {
+                        input = document.createElement('input');
+                        input.type = type;
+                    }
+                    input.name = name;
+                    input.value = originalFormValues[name] || '';
+                    input.required = true;
+                    input.classList.add('mt-1', 'block', 'w-full', 'px-4', 'py-2', 'bg-green-50', 'border-2', 'border-green-200', 'rounded-md', 'shadow-sm', 'focus:ring-green-500', 'focus:border-green-500', 'sm:text-sm', 'transition', 'duration-200');
+                    div.appendChild(input);
+                    return div;
+                };
+
+                reviewContent.appendChild(createInput('robloxUsername', 'text', formFieldMap['robloxUsername']));
+                reviewContent.appendChild(createInput('discordUsername', 'text', formFieldMap['discordUsername']));
+                reviewContent.appendChild(createInput('role', 'select', formFieldMap['role']));
+                reviewContent.appendChild(createInput('availabilityHours', 'number', formFieldMap['availabilityHours']));
+                reviewContent.appendChild(createInput('availabilityDays', 'textarea', formFieldMap['availabilityDays'], 3));
+                reviewContent.appendChild(createInput('timezone', 'text', formFieldMap['timezone']));
+                reviewContent.appendChild(createInput('howFound', 'textarea', formFieldMap['howFound'], 2));
+                reviewContent.appendChild(createInput('pastExperience', 'textarea', formFieldMap['pastExperience'], 3));
+                reviewContent.appendChild(createInput('passion', 'textarea', formFieldMap['passion'], 3));
+
+                // Add experience questions
+                const role = originalFormValues['role'];
+                let roleType = '';
+                if (role.includes('CEO')) roleType = 'CEO';
+                else if (role.includes('Manager')) roleType = 'Manager';
+                else if (role.includes('Driver')) roleType = 'Driver';
+                
+                const expQuestions = questions[roleType];
+                if (expQuestions) {
+                    expQuestions.forEach((q, index) => {
+                        const ans = originalFormValues[`experience_answer_${index}`] || '';
+                        const questionGroup = document.createElement('div');
+                        questionGroup.classList.add('space-y-2');
+
+                        const label = document.createElement('label');
+                        label.textContent = q;
+                        label.classList.add('block', 'text-sm', 'font-medium', 'text-green-700');
+                        
+                        const textarea = document.createElement('textarea');
+                        textarea.name = `experience_answer_${index}`;
+                        textarea.rows = 4;
+                        textarea.value = ans;
+                        textarea.required = true;
+                        textarea.classList.add('mt-1', 'block', 'w-full', 'px-4', 'py-2', 'bg-green-50', 'border-2', 'border-green-200', 'rounded-md', 'shadow-sm', 'focus:ring-green-500', 'focus:border-green-500', 'sm:text-sm', 'transition', 'duration-200');
+
+                        questionGroup.appendChild(label);
+                        questionGroup.appendChild(textarea);
+                        reviewContent.appendChild(questionGroup);
+                    });
+                }
+
+                editButton.textContent = 'Save';
+                reviewContent.setAttribute('data-editing', 'true');
             }
-            
-            const requirementsScreen = document.getElementById('requirements-screen');
-            const startApplicationBtn = document.getElementById('start-application-btn');
-            const applicationForm = document.getElementById('application-form');
-            const thankYouScreen = document.getElementById('thank-you-screen');
-            const formSteps = Array.from(document.querySelectorAll('.form-step:not(#application-form):not(#thank-you-screen)'));
-            const progressBar = document.getElementById('progress-bar');
-            const messageBox = document.getElementById('message-box');
-            const messageBoxOverlay = document.getElementById('message-box-overlay');
-            const messageBoxText = document.getElementById('message-box-text');
-            const messageBoxOkBtn = document.getElementById('message-box-ok-btn');
-            const questionsNextBtn = document.getElementById('questions-next-btn');
+        }
 
-            let currentStep = 0;
-            let currentQuestionIndex = 0;
-            let selectedRole = '';
-            const formAnswers = {};
-            
-            const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1415590171394572369/VuKSQ2ovHfQKcKVGuSAk9lgSe1eGXcPqAJ6k1Zo9U4GLM1npy1YGnFCbY6i8B3M6Q422';
+        function validateEditableFields() {
+            const reviewContent = document.getElementById('reviewContent');
+            const requiredFields = reviewContent.querySelectorAll('[required]');
+            for (const field of requiredFields) {
+                if (!field.value) {
+                    field.classList.add('border-red-500');
+                    return false;
+                }
+                field.classList.remove('border-red-500');
+            }
+            return true;
+        }
 
-            const roleQuestions = {
-                'Martins Albury CEO': [
-                    "If you could change one thing about the company to make it better, what would it be and why?",
-                    "How would you encourage your team members to work together?",
-                    "A big event is happening in-game, and many new players are joining. How would you prepare the company?",
-                    "How would you handle a situation where a lot of players are complaining on Discord about a recent update?",
-                    "What are some key qualities a good leader should have?",
-                    "How would you train a new manager for your team?",
-                    "How do you plan to make our company stand out from others?",
-                    "Describe a time you solved a problem on your own.",
-                    "What is the most important rule for a CEO to follow?",
-                    "How would you ensure all your team members feel heard and respected?",
-                    "A player is being mean to a staff member. How would you respond?",
-                    "How do you stay organized when you have a lot of tasks?",
-                    "What motivates you to take on a leadership role?",
-                    "If you had to create a new company rule, what would it be and why?",
-                    "Why do you want to be the CEO of this division?"
-                ],
-                'Martins Manager': [
-                    "How would you handle a conflict between two drivers on your team?",
-                    "What is the most important skill for a manager to have?",
-                    "A new driver is struggling with their first few shifts. How would you help them?",
-                    "How would you make sure all drivers are following the safety rules?",
-                    "What would you do if you saw a driver breaking a major rule?",
-                    "How would you celebrate your team's achievements?",
-                    "A player reports that a driver was being rude. How would you investigate and handle this?",
-                    "What makes you a good team player?",
-                    "How would you handle a situation where a player is spamming the chat?",
-                    "What do you think is the biggest challenge a manager faces?",
-                    "How would you communicate important announcements to your team?",
-                    "How do you plan to be a positive role model for other drivers?",
-                    "How do you stay calm when things get stressful?",
-                    "Describe a time you had to teach someone something new.",
-                    "Why do you want to be a manager for this division?"
-                ],
-                'Dysons CEO': [
-                    "If you could change one thing about the company to make it better, what would it be and why?",
-                    "How would you encourage your team members to work together?",
-                    "A big event is happening in-game, and many new players are joining. How would you prepare the company?",
-                    "How would you handle a situation where a lot of players are complaining on Discord about a recent update?",
-                    "What are some key qualities a good leader should have?",
-                    "How would you train a new manager for your team?",
-                    "How do you plan to make our company stand out from others?",
-                    "Describe a time you solved a problem on your own.",
-                    "What is the most important rule for a CEO to follow?",
-                    "How would you ensure all your team members feel heard and respected?",
-                    "A player is being mean to a staff member. How would you respond?",
-                    "How do you stay organized when you have a lot of tasks?",
-                    "What motivates you to take on a leadership role?",
-                    "If you had to create a new company rule, what would it be and why?",
-                    "Why do you want to be the CEO of this division?"
-                ],
-                'Dysons Manager': [
-                    "How would you handle a conflict between two drivers on your team?",
-                    "What is the most important skill for a manager to have?",
-                    "A new driver is struggling with their first few shifts. How would you help them?",
-                    "How would you make sure all drivers are following the safety rules?",
-                    "What would you do if you saw a driver breaking a major rule?",
-                    "How would you celebrate your team's achievements?",
-                    "A player reports that a driver was being rude. How would you investigate and handle this?",
-                    "What makes you a good team player?",
-                    "How would you handle a situation where a player is spamming the chat?",
-                    "What do you think is the biggest challenge a manager faces?",
-                    "How would you communicate important announcements to your team?",
-                    "How do you plan to be a positive role model for other drivers?",
-                    "How do you stay calm when things get stressful?",
-                    "Describe a time you had to teach someone something new.",
-                    "Why do you want to be a manager for this division?"
-                ],
-                'Martins Driver': [
-                    "Why do you want to be a bus driver for us?",
-                    "How would you handle a passenger who is being loud and disruptive?",
-                    "What is the most important rule of the road in the game?",
-                    "A passenger asks you for help, but you're in the middle of a route. What do you do?",
-                    "How would you make a passenger's experience on your bus enjoyable?",
-                    "What does it mean to be a responsible driver?",
-                    "You see another driver making a mistake. How do you respond?",
-                    "How would you handle a bus that has a minor issue, like a door not closing properly?",
-                    "What is your approach to staying on top of bus route changes or new rules?",
-                    "How would you assist a passenger who needs help with directions?",
-                    "What is your experience with customer service?",
-                    "How do you stay calm under pressure?",
-                    "What steps would you take to correctly report a rule-breaking player or staff member?",
-                    "How would you maintain the cleanliness of your bus?",
-                    "What qualities do you think make a great bus driver?"
-                ],
-                'Dysons Driver': [
-                    "Why do you want to be a bus driver for us?",
-                    "How would you handle a passenger who is being loud and disruptive?",
-                    "What is the most important rule of the road in the game?",
-                    "A passenger asks you for help, but you're in the middle of a route. What do you do?",
-                    "How would you make a passenger's experience on your bus enjoyable?",
-                    "What does it mean to be a responsible driver?",
-                    "You see another driver making a mistake. How do you respond?",
-                    "How would you handle a bus that has a minor issue, like a door not closing properly?",
-                    "What is your approach to staying on top of bus route changes or new rules?",
-                    "How would you assist a passenger who needs help with directions?",
-                    "What is your experience with customer service?",
-                    "How do you stay calm under pressure?",
-                    "What steps would you take to correctly report a rule-breaking player or staff member?",
-                    "How would you maintain the cleanliness of your bus?",
-                    "What qualities do you think make a great bus driver?"
+        function nextPage() {
+            if (validateCurrentPage()) {
+                saveCurrentPageData();
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    loadPageData(currentPage);
+                    if (currentPage === 6) {
+                        populateReviewPage();
+                    }
+                    showPage(currentPage);
+                }
+            }
+        }
+
+        function previousPage() {
+            if (currentPage > 1) {
+                saveCurrentPageData();
+                currentPage--;
+                loadPageData(currentPage);
+                showPage(currentPage);
+            }
+        }
+        
+        async function sendToDiscord(data) {
+            const embeds = [{
+                title: `New Staff Application from ${data.robloxUsername}`,
+                description: `A new application has been submitted by a user.`,
+                color: 5763719, // A nice green color
+                fields: [
+                    { name: 'Roblox Username', value: data.robloxUsername, inline: true },
+                    { name: 'Discord Username', value: data.discordUsername, inline: true },
+                    { name: 'Applied Role', value: data.role, inline: false },
+                    { name: 'Weekly Hours', value: data.availabilityHours, inline: true },
+                    { name: 'Most Active Days', value: data.availabilityDays, inline: false },
+                    { name: 'Time Zone', value: data.timezone, inline: true },
+                    { name: 'How Found', value: data.howFound, inline: false },
+                    { name: 'Past Experience', value: data.pastExperience, inline: false },
+                    { name: 'Passion for Public Transport', value: data.passion, inline: false }
                 ]
-            };
+            }];
 
-            function showMessageBox(message) {
-                messageBoxText.textContent = message;
-                messageBox.classList.remove('hidden');
-                messageBoxOverlay.classList.remove('hidden');
-            }
-
-            function hideMessageBox() {
-                messageBox.classList.add('hidden');
-                messageBoxOverlay.classList.add('hidden');
-            }
-
-            messageBoxOkBtn.addEventListener('click', hideMessageBox);
-
-            function showStep(stepIndex) {
-                formSteps.forEach((step, index) => {
-                    if (index === stepIndex) {
-                        step.classList.add('active');
-                    } else {
-                        step.classList.remove('active');
-                    }
-                });
-                updateProgressBar();
-                applicationForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-
-            function updateProgressBar() {
-                let totalSteps = formSteps.length;
-                let currentProgressPoint = currentStep + 1;
-                
-                if (currentStep === 4 && selectedRole && roleQuestions[selectedRole]) {
-                    totalSteps = formSteps.length - 1 + roleQuestions[selectedRole].length;
-                    currentProgressPoint = currentStep + currentQuestionIndex;
-                }
-
-                const progress = (currentProgressPoint / totalSteps) * 100;
-                progressBar.style.width = `${progress}%`;
-            }
-
-            function validateStep(stepIndex) {
-                let isValid = true;
-                const currentStepElement = formSteps[stepIndex];
-                
-                if (stepIndex <= 2) {
-                    const input = currentStepElement.querySelector('[required]');
-                    if (!input.value.trim()) {
-                        isValid = false;
-                        input.style.borderColor = '#ef4444';
-                    } else {
-                        input.style.borderColor = '#d1d5db';
-                    }
-
-                    if (stepIndex === 2) {
-                        const ageError = document.getElementById('age-error');
-                        if (parseInt(input.value) < 13) {
-                            isValid = false;
-                            ageError.classList.remove('hidden');
-                            input.style.borderColor = '#ef4444';
-                        } else {
-                            ageError.classList.add('hidden');
-                        }
-                    }
-                } else if (stepIndex === 3) {
-                    const roleSelect = document.getElementById('role-select');
-                    if (!roleSelect.value) {
-                        isValid = false;
-                        roleSelect.style.borderColor = '#ef4444';
-                    } else {
-                        isValid = true;
-                        selectedRole = roleSelect.value;
-                        roleSelect.style.borderColor = '#d1d5db';
-                    }
-                } else if (stepIndex === 4) {
-                    const currentQuestionInput = document.getElementById(`question-${currentQuestionIndex}`);
-                    if (currentQuestionInput && !currentQuestionInput.value.trim()) {
-                        isValid = false;
-                        currentQuestionInput.style.borderColor = '#ef4444';
-                    } else if (currentQuestionInput) {
-                        isValid = true;
-                        currentQuestionInput.style.borderColor = '#d1d5db';
-                    }
-                } else if (stepIndex === 5) {
-                    const agreementCheck = document.getElementById('agreement-check');
-                    const agreementError = document.getElementById('agreement-error');
-                    if (!agreementCheck.checked) {
-                        isValid = false;
-                        agreementError.classList.remove('hidden');
-                    } else {
-                        isValid = true;
-                        agreementError.classList.add('hidden');
-                    }
-                }
-                
-                return isValid;
-            }
+            const role = data.role;
+            let roleType = '';
+            if (role.includes('CEO')) roleType = 'CEO';
+            else if (role.includes('Manager')) roleType = 'Manager';
+            else if (role.includes('Driver')) roleType = 'Driver';
             
-            function showQuestion() {
-                const questionsContainer = document.getElementById('role-questions');
-                questionsContainer.innerHTML = '';
-                
-                if (roleQuestions[selectedRole] && currentQuestionIndex < roleQuestions[selectedRole].length) {
-                    const question = roleQuestions[selectedRole][currentQuestionIndex];
-                    const questionDiv = document.createElement('div');
-                    questionDiv.classList.add('mb-4');
-                    questionDiv.innerHTML = `
-                        <label for="question-${currentQuestionIndex}" class="label">${currentQuestionIndex + 1}. ${question}</label>
-                        <textarea id="question-${currentQuestionIndex}" name="question-${currentQuestionIndex}" required class="mb-4">${formAnswers[`question-${currentQuestionIndex}`] || ''}</textarea>
-                    `;
-                    questionsContainer.appendChild(questionDiv);
-                    questionsNextBtn.classList.remove('hidden');
-                } else {
-                    questionsNextBtn.classList.add('hidden');
-                    currentStep++;
-                    showStep(currentStep);
-                }
-                updateProgressBar();
+            const expQuestions = questions[roleType];
+            if (expQuestions) {
+                expQuestions.forEach((q, index) => {
+                    const ans = data[`experience_answer_${index}`];
+                    embeds[0].fields.push({
+                        name: `Experience Question: ${q}`,
+                        value: ans,
+                        inline: false
+                    });
+                });
             }
 
-            // Event Listeners
-            startApplicationBtn.addEventListener('click', () => {
-                requirementsScreen.classList.add('hidden');
-                applicationForm.classList.add('active');
-                showStep(currentStep);
-            });
-
-            document.getElementById('role-select').addEventListener('change', (event) => {
-                selectedRole = event.target.value;
-            });
-
-            document.querySelectorAll('.next-btn').forEach(button => {
-                button.addEventListener('click', () => {
-                    if (validateStep(currentStep)) {
-                        const inputElement = formSteps[currentStep].querySelector('input, select, textarea');
-                        if (inputElement) {
-                            formAnswers[inputElement.name] = inputElement.value;
-                        }
-
-                        if (currentStep === 3) {
-                            currentQuestionIndex = 0;
-                            showStep(currentStep + 1);
-                            showQuestion();
-                        } else {
-                            currentStep++;
-                            if (currentStep < formSteps.length) {
-                                showStep(currentStep);
-                            }
-                        }
-                    }
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ embeds })
                 });
-            });
 
-            questionsNextBtn.addEventListener('click', () => {
-                if (validateStep(currentStep)) {
-                    const currentQuestionInput = document.getElementById(`question-${currentQuestionIndex}`);
-                    if (currentQuestionInput) {
-                        formAnswers[currentQuestionInput.name] = currentQuestionInput.value;
-                    }
-                    
-                    currentQuestionIndex++;
-                    if (currentQuestionIndex < roleQuestions[selectedRole].length) {
-                        showQuestion();
-                    } else {
-                        currentStep++;
-                        showStep(currentStep);
-                    }
+                if (response.ok) {
+                    return true;
+                } else {
+                    console.error('Discord webhook failed to send. Status:', response.status);
+                    return false;
                 }
-            });
+            } catch (error) {
+                console.error('Failed to send to Discord webhook:', error);
+                return false;
+            }
+        }
 
-            document.querySelectorAll('.prev-btn').forEach(button => {
-                button.addEventListener('click', () => {
-                    if (currentStep === 5) {
-                        currentStep--;
-                        currentQuestionIndex = roleQuestions[selectedRole].length - 1;
-                        showStep(currentStep);
-                        showQuestion();
-                    } else if (currentStep === 4) {
-                        currentQuestionIndex--;
-                        if (currentQuestionIndex < 0) {
-                            currentStep--;
-                            showStep(currentStep);
-                        } else {
-                            showQuestion();
-                        }
-                    } else {
-                        currentStep--;
-                        if (currentStep >= 0) {
-                            const inputElement = formSteps[currentStep].querySelector('input, select, textarea');
-                            if (inputElement) {
-                                inputElement.value = formAnswers[inputElement.name] || '';
-                            }
-                            showStep(currentStep);
-                        }
-                    }
-                });
-            });
+        async function handleSubmit(event) {
+            event.preventDefault();
+            const form = document.getElementById('applicationForm');
+            const summaryContainer = document.getElementById('summaryContainer');
+            const summaryHeader = document.getElementById('summaryHeader');
+            const summaryText = document.getElementById('summaryText');
+            const summaryContent = document.getElementById('summaryContent');
+            
+            summaryContent.innerHTML = '';
+            summaryHeader.textContent = 'Submitting your application...';
+            summaryText.textContent = 'Please wait a moment while we process your submission.';
 
-            document.getElementById('application-form').addEventListener('submit', async (event) => {
-                event.preventDefault();
+            form.classList.add('hidden');
+            summaryContainer.classList.remove('hidden');
+            summaryContainer.scrollIntoView({ behavior: 'smooth' });
 
-                if (!isAuthReady) {
-                    showMessageBox('Database connection is not ready. Please try again in a moment.');
-                    return;
+            // Ensure the final state is saved from the review page
+            applyReviewEdits();
+
+            const success = await sendToDiscord(originalFormValues);
+
+            if (success) {
+                summaryHeader.textContent = 'Application Submitted Successfully!';
+                summaryText.textContent = 'Thank you for your interest. We will review your application shortly. Here is a summary of your submission:';
+                for (const [key, value] of Object.entries(originalFormValues)) {
+                    const label = formFieldMap[key] || key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                    const p = document.createElement('p');
+                    p.innerHTML = `<span class="font-semibold">${label}:</span> ${value}`;
+                    summaryContent.appendChild(p);
                 }
+            } else {
+                summaryHeader.textContent = 'Submission Failed';
+                summaryText.textContent = 'There was an error submitting your application. Please check your internet connection and try again later.';
+            }
+        }
 
-                const agreementCheck = document.getElementById('agreement-check');
-                if (agreementCheck && !agreementCheck.checked) {
-                    showMessageBox('You must agree to the terms to submit your application.');
-                    return;
-                }
-
-                if (validateStep(currentStep)) {
-                    const formData = new FormData(event.target);
-                    const data = {};
-                    for (let [key, value] of formData.entries()) {
-                        data[key] = value;
-                    }
-                    
-                    const finalData = { ...data, ...formAnswers };
-                    
-                    let discordMessageContent = `New Application Received for **${finalData.role}**!\n\n`;
-                    discordMessageContent += `**Roblox Username:** ${finalData.robloxUsername}\n`;
-                    discordMessageContent += `**Discord Username:** ${finalData.discordUsername}\n`;
-                    discordMessageContent += `**Age:** ${finalData.age}\n\n`;
-                    
-                    const questionsList = roleQuestions[finalData.role];
-                    if (questionsList) {
-                        discordMessageContent += `**Role-Specific Questions:**\n`;
-                        questionsList.forEach((question, index) => {
-                            const answerKey = `question-${index}`;
-                            discordMessageContent += `  - **${question}**\n`;
-                            discordMessageContent += `    - ${finalData[answerKey] || 'No answer provided'}\n`;
-                        });
-                        discordMessageContent += "\n";
-                    }
-
-                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'applications', userId);
-                    try {
-                        await setDoc(docRef, finalData);
-                        console.log("Application saved to Firestore with ID:", userId);
-
-                        const response = await fetch(DISCORD_WEBHOOK_URL, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({ content: discordMessageContent }),
-                        });
-
-                        if (response.ok) {
-                            console.log('Application successfully sent to Discord!');
-                            applicationForm.classList.remove('active');
-                            applicationForm.classList.add('form-step');
-                            thankYouScreen.classList.add('active');
-                        } else {
-                            console.error('Failed to send application to Discord:', response.status, response.statusText);
-                            showMessageBox('Failed to submit application. Please try again later. (Error: ' + response.status + ')');
-                        }
-                    } catch (error) {
-                        console.error('Error submitting application:', error);
-                        showMessageBox('An error occurred while submitting your application. Please try again.');
-                    }
-                }
-            });
-
-            applicationForm.classList.add('form-step');
-            thankYouScreen.classList.add('form-step');
-            requirementsScreen.classList.remove('hidden');
+        window.onload = () => {
+            showPage(currentPage);
         };
     </script>
 </body>
