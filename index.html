@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Albury and Wodonga Transport - Bus Driver Application</title>
+    <title>Albury and Wodonga Transport Staff Application</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts - Inter -->
@@ -243,18 +243,17 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        document.addEventListener('DOMContentLoaded', () => {
-
-            console.log('DOM fully loaded and parsed. Attaching event listener to Start Application button.');
-
+        
+        // This is a failsafe to ensure the code runs after everything is loaded.
+        window.onload = function() {
+            
             const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
             const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
             const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
+            
             let db, auth, userId;
             let isAuthReady = false;
-
+            
             if (firebaseConfig) {
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
@@ -279,7 +278,7 @@
                 console.error("Firebase config is missing. App cannot save data.");
                 showMessageBox('Firebase configuration not found. Application cannot run.');
             }
-
+            
             const requirementsScreen = document.getElementById('requirements-screen');
             const startApplicationBtn = document.getElementById('start-application-btn');
             const applicationForm = document.getElementById('application-form');
@@ -670,7 +669,7 @@
             applicationForm.classList.add('form-step');
             thankYouScreen.classList.add('form-step');
             requirementsScreen.classList.remove('hidden');
-        });
+        };
     </script>
 </body>
 </html>
